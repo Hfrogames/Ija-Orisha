@@ -220,6 +220,10 @@ PrefabInstance:
       value: card_1
       objectReference: {fileID: 0}
     - target: {fileID: 8953070704195873809, guid: ce27c9054d2fb7a42a8c7f2cc870b01c, type: 3}
+      propertyPath: button
+      value: 
+      objectReference: {fileID: 4661336364466109732}
+    - target: {fileID: 8953070704195873809, guid: ce27c9054d2fb7a42a8c7f2cc870b01c, type: 3}
       propertyPath: iconSprite
       value: 
       objectReference: {fileID: 1182692737611885171}

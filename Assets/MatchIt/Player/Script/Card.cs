@@ -1,4 +1,5 @@
 using System;
+using MatchIt.Script.Event;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,28 +7,37 @@ namespace MatchIt.Player.Script
 {
     public class Card : MonoBehaviour
     {
-        private enum PlayerID
+        public enum PlayerID
         {
-            None,
             Player1,
             Player2
         }
 
-        [SerializeField] private PlayerID playerID;
+        [field: SerializeField] public PlayerID playerID { get; private set; }
+        public CardID cardID { get; private set; }
 
-        private bool isNone => playerID == PlayerID.None;
         private bool isPlayer1 => playerID == PlayerID.Player1;
         private bool isPlayer2 => playerID == PlayerID.Player2;
 
         [SerializeField] private CardSO cardSo;
         [SerializeField] private Image iconSprite;
         [SerializeField] private GameObject[] playerBg;
+        [SerializeField] private Button button;
 
-        private CardID _cardID;
+
+        private void Awake()
+        {
+            button.onClick.AddListener(OnButtonClicked);
+        }
 
         private void Start()
         {
             AssignCard();
+        }
+
+        private void OnDisable()
+        {
+            button.onClick.RemoveListener(OnButtonClicked);
         }
 
         private void AssignCard()
@@ -36,7 +46,12 @@ namespace MatchIt.Player.Script
             else if (isPlayer2) playerBg[1].SetActive(true);
 
             iconSprite.sprite = cardSo.sprite;
-            _cardID = cardSo.cardID;
+            cardID = cardSo.cardID;
+        }
+
+        private void OnButtonClicked()
+        {
+            EventPub.Emit(this);
         }
     }
 }
