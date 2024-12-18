@@ -12,8 +12,17 @@ namespace MatchIt.Script.Event
         OnCardOneMatch,
         OnCardTwoMatch,
         OnRoundReset,
-        OnRoundStart
+        OnRoundStart,
+        OnLobbyConnected,
+        OnLobbyDisconnected,
+        OnLobbyJoined,
+        OnSessionPaired,
+        OnSessionConnected,
+        OnSessionDisconnected,
+        OnSessionStart
     }
+    
+    
 
     public class EventPub
     {
