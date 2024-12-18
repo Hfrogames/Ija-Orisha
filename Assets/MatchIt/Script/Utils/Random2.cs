@@ -1,6 +1,6 @@
 namespace MatchIt.Script.Utils
 {
-    public static class PlayerID
+    public static class Random2
     {
         public static string GenerateRandomString(int length)
         {

@@ -1,4 +1,6 @@
+using MatchIt.Player.Script;
 using MatchIt.Script.Event;
+using MatchIt.Script.Network;
 using MatchIt.Script.Utils;
 using UnityEngine;
 using NativeWebSocket;
@@ -47,9 +49,9 @@ public class LobbySocket : MonoBehaviour
 
     public async void OpenConn()
     {
-        _webSocket = new WebSocket("ws://localhost:3000/lobby");
+        // _webSocket = new WebSocket("ws://localhost:3000/lobby");
 
-        // _webSocket = new WebSocket("ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com");
+        _webSocket = new WebSocket("ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/lobby");
         _webSocket.OnOpen += () => { EventPub.Emit(PlayEvent.OnLobbyConnected); };
 
         _webSocket.OnError += (e) => { EventPub.Emit(PlayEvent.OnLobbyDisconnected); };
@@ -64,11 +66,20 @@ public class LobbySocket : MonoBehaviour
 
             SocMessage socResponse = JsonUtility.FromJson<SocMessage>(message);
 
-            ManageSocResp(socResponse.action);
+            ManageSocResp(socResponse);
         };
 
         await _webSocket.Connect();
     }
+
+    public async void CloseConn()
+    {
+        if (_webSocket != null && _webSocket.State == WebSocketState.Open)
+        {
+            await _webSocket.Close();
+        }
+    }
+
 
     private async void SendWebSocketMessage(SocMessage socMessage)
     {
@@ -80,14 +91,15 @@ public class LobbySocket : MonoBehaviour
         }
     }
 
-    private void ManageSocResp(string socResponse)
+    private void ManageSocResp(SocMessage socResponse)
     {
-        switch (socResponse)
+        switch (socResponse.action)
         {
             case "lobbyJoined":
                 EventPub.Emit(PlayEvent.OnLobbyJoined);
                 break;
             case "sessionPaired":
+                SessionSocket.Instance.SetJoinData(socResponse);
                 EventPub.Emit(PlayEvent.OnSessionPaired);
                 break;
         }
@@ -98,7 +110,7 @@ public class LobbySocket : MonoBehaviour
         SocMessage joinData = new SocMessage()
         {
             action = "join",
-            playerID = "playerID"
+            playerID = PlayerManager.Instance.PlayerID
         };
         SendWebSocketMessage(joinData);
     }
@@ -108,7 +120,7 @@ public class SocMessage
 {
     public string action;
     public string roomID;
-    public string playerID = PlayerID.GenerateRandomString(6);
+    public string playerID;
     public string playerOne;
     public string playerTwo;
 }

@@ -1,21 +1,17 @@
+using MatchIt.Player.Script;
 using MatchIt.Script.Event;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MatchIt.Script.Network
 {
     public class ConnectionUI : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI lobbySocket;
-        [SerializeField] private Image lobbySocketIcon;
-
-        [SerializeField] private TextMeshProUGUI joinLobby;
-
-        [SerializeField] private Transform joinGameSession;
-
-        [SerializeField] private TextMeshProUGUI sessionSocket;
-        [SerializeField] private Image sessionSocketIcon;
+        [SerializeField] private DemoPanel playerID;
+        [SerializeField] private DemoPanel lobbySocket;
+        [SerializeField] private DemoPanel joinLobby;
+        [SerializeField] private DemoPanel joinGameSession;
+        [SerializeField] private DemoPanel sessionSocket;
+        [SerializeField] private DemoPanel matchStarted;
 
         private void OnEnable()
         {
@@ -29,8 +25,6 @@ namespace MatchIt.Script.Network
 
         private void Start()
         {
-            lobbySocket.text = "offline";
-            lobbySocket.color = lobbySocketIcon.color = Color.red;
         }
 
         private void OnPlayEvent(PlayEvent playEvent)
@@ -38,28 +32,38 @@ namespace MatchIt.Script.Network
             switch (playEvent)
             {
                 case PlayEvent.OnLobbyConnected:
-                    lobbySocket.text = "online";
-                    lobbySocket.color = lobbySocketIcon.color = Color.green;
+                    lobbySocket.Success("connected");
+                    joinLobby.gameObject.SetActive(true);
+                    joinLobby.Normal("join");
                     break;
                 case PlayEvent.OnLobbyDisconnected:
-                    lobbySocket.text = "offline";
-                    lobbySocket.color = lobbySocketIcon.color = Color.red;
+                    lobbySocket.Fail("closed");
                     break;
                 case PlayEvent.OnLobbyJoined:
-                    joinLobby.color = lobbySocketIcon.color = Color.green;
+                    joinLobby.Success("joined");
                     break;
                 case PlayEvent.OnSessionPaired:
                     joinGameSession.gameObject.SetActive(true);
+                    joinGameSession.Normal("join");
+                    SessionSocket.Instance.Connect();
+                    LobbySocket.Instance.CloseConn();
+                    joinLobby.Normal("closed");
                     break;
                 case PlayEvent.OnSessionConnected:
-                    sessionSocket.text = "online";
-                    sessionSocket.color = sessionSocketIcon.color = Color.green;
-                    sessionSocketIcon.gameObject.SetActive(true);
                     sessionSocket.gameObject.SetActive(true);
+                    sessionSocket.Success("connected");
                     break;
                 case PlayEvent.OnSessionDisconnected:
-                    sessionSocket.text = "offline";
-                    sessionSocket.color = sessionSocketIcon.color = Color.red;
+                    sessionSocket.Success("offline");
+                    break;
+                case PlayEvent.OnSessionJoined:
+                    joinGameSession.Success("joined");
+                    break;
+                case PlayEvent.OnSessionStart:
+                    matchStarted.gameObject.SetActive(true);
+                    SocMessage socData = SessionSocket.Instance.JoinData;
+                    string matchDetails = $"{socData.playerOne} vs {socData.playerTwo}";
+                    matchStarted.Success(matchDetails);
                     break;
             }
         }

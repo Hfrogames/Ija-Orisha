@@ -1,3 +1,4 @@
+using MatchIt.Player.Script;
 using UnityEngine;
 using NativeWebSocket;
 using MatchIt.Script.Event;
@@ -8,7 +9,10 @@ namespace MatchIt.Script.Network
     {
         public static SessionSocket Instance { get; private set; }
 
-        private string _socketURL = "ws://localhost:3000/session";
+        // private string _socketURL = "ws://localhost:3000/session";
+
+        private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/session";
+        public SocMessage JoinData { get; private set; }
 
         private void Awake()
         {
@@ -25,7 +29,7 @@ namespace MatchIt.Script.Network
 
         private void Start()
         {
-            Connect();
+            // Connect();
         }
 
         public void Connect()
@@ -47,8 +51,8 @@ namespace MatchIt.Script.Network
         {
             switch (socResponse)
             {
-                case "sessionConnected":
-                    EventPub.Emit(PlayEvent.OnLobbyJoined);
+                case "sessionJoined":
+                    EventPub.Emit(PlayEvent.OnSessionJoined);
                     break;
                 case "sessionStart":
                     EventPub.Emit(PlayEvent.OnSessionStart);
@@ -56,15 +60,21 @@ namespace MatchIt.Script.Network
             }
         }
 
-        public void Join()
+        public void SetJoinData(SocMessage joinData)
         {
-            SocMessage joinData = new SocMessage()
+            JoinData = new SocMessage()
             {
                 action = "join",
-                playerID = "playerID",
-                roomID = "4567",
+                playerID = PlayerManager.Instance.PlayerID,
+                roomID = joinData.roomID,
+                playerOne = joinData.playerOne,
+                playerTwo = joinData.playerTwo
             };
-            SendWebSocketMessage(joinData);
+        }
+
+        public void Join()
+        {
+            SendWebSocketMessage(JoinData);
         }
     }
 }

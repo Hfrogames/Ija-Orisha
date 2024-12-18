@@ -19,6 +19,7 @@ namespace MatchIt.Script.Event
         OnSessionPaired,
         OnSessionConnected,
         OnSessionDisconnected,
+        OnSessionJoined,
         OnSessionStart
     }
     
