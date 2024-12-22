@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MatchIt.Player.Script.CardControl
 {
-    public class DragAndDrop : MonoBehaviour
+    public class DragItem : MonoBehaviour
     {
         [SerializeField] private DropZone attackDropZone;
         [SerializeField] private DropZone defenseDropZone;
@@ -14,9 +14,11 @@ namespace MatchIt.Player.Script.CardControl
         {
             Debug.Log("card selected");
         }
-
-        private void DropZone()
+        
+        private void OnDrag()
         {
+            // follow mousePosition
         }
+       
     }
 }

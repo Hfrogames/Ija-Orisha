@@ -70,10 +70,21 @@
                 {
                     "name": "",
                     "id": "6c1c22a0-af2e-40ab-b284-2246239a036f",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "Hover",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d3fbdd0-2ff2-4456-9e8e-3cca61ca35d1",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Hover",
                     "isComposite": false,
                     "isPartOfComposite": false
