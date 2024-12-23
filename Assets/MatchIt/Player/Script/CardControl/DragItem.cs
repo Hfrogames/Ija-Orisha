@@ -1,24 +1,34 @@
+using System;
 using UnityEngine;
 
-namespace MatchIt.Player.Script.CardControl
+public class DragItem : MonoBehaviour
 {
-    public class DragItem : MonoBehaviour
+    [field: SerializeField] public CardType CardID { get; private set; }
+    [field: SerializeField] public RectTransform RectTransform { get; private set; }
+
+
+    private DropZone _cachedDropZone;
+    private Vector3 _cachedPosition;
+
+    public void Init()
     {
-        [SerializeField] private DropZone attackDropZone;
-        [SerializeField] private DropZone defenseDropZone;
-
-        private RectTransform _selectedCard;
+        if (_cachedDropZone)
+            _cachedDropZone.OnRemove(this);
 
 
-        private void OnSelect()
-        {
-            Debug.Log("card selected");
-        }
-        
-        private void OnDrag()
-        {
-            // follow mousePosition
-        }
-       
+        _cachedDropZone = transform.GetComponentInParent<DropZone>();
+        _cachedPosition = transform.position;
+        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
+
+    public void ResetItem()
+    {
+        transform.position = _cachedPosition;
+    }
+}
+
+public enum CardType
+{
+    Card,
+    Spell
 }

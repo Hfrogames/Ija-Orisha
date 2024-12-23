@@ -16,14 +16,22 @@ namespace MatchIt.Script.Input
         [SerializeField] private Tags cards;
 
         private Vector2 _touchPosition;
+        private Vector2 _cachedTouchPosition;
         private bool _isTouched;
         private bool _isDragging;
+        private bool _isOnDropZone;
 
         private InputController _inputController = new InputController();
 
         private void OnHover(InputValue touchPos)
         {
             _touchPosition = touchPos.Get<Vector2>();
+
+            if (_cachedTouchPosition != _touchPosition)
+            {
+                _cachedTouchPosition = _touchPosition;
+                OnPositionReset();
+            }
 
             FindHoverObject();
 
@@ -33,14 +41,26 @@ namespace MatchIt.Script.Input
         private void OnTouch()
         {
             _isTouched = true;
-            Debug.Log(_isTouched + " touch");
+            FindHoverObject();
         }
 
         private void OnUntouch()
         {
             _isTouched = _isDragging = false;
+            if (!_isOnDropZone)
+                _inputController.UnSetFollow();
 
-            _inputController.UnSetFollow();
+            if (_isOnDropZone)
+                _inputController.SendToDropZone();
+
+            // _isOnDropZone = false;
+            // _inputController.UnSetActiveDropZone();
+        }
+
+        private void OnPositionReset()
+        {
+            _isOnDropZone = false;
+            _inputController.UnSetActiveDropZone();
         }
 
         private void FindHoverObject()
@@ -67,7 +87,8 @@ namespace MatchIt.Script.Input
         {
             if (hit.CompareTag(cardZone.ToString()))
             {
-                Debug.Log("It on card zone");
+                _isOnDropZone = true;
+                _inputController.SetActiveDropZone(hit);
             }
         }
 
@@ -78,27 +99,9 @@ namespace MatchIt.Script.Input
                 if (!_isDragging)
                 {
                     _isDragging = true;
-                    _inputController.SetFollowItem(hit);
+                    _inputController.SetFollowItem(hit, gamePlayGraphicsRaycaster.transform);
                 }
-
-                Debug.Log("It on card");
             }
         }
-
-        // private void FollowPosition()
-        // {
-        //     if (!_followItem) return;
-        //
-        //     _followItem.position = _touchPosition;
-        // }
-
-        // private void ResetFollowPosition()
-        // {
-        //     if (!_followItem) return;
-        //
-        //     _followItem.position = _followItemCachedPosition;
-        //
-        //     _followItem = null;
-        // }
     }
 }

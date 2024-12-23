@@ -1,5 +1,5 @@
 public enum Tags
 {
     Cards,
-    CardZone
+    CardZone,
 }
