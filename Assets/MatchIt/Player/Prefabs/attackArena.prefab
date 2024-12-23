@@ -722,6 +722,7 @@ GameObject:
   - component: {fileID: 1655962269282109137}
   - component: {fileID: 8241838850865106856}
   - component: {fileID: 8973009061364330465}
+  - component: {fileID: 8543082907534330193}
   m_Layer: 5
   m_Name: dropZone
   m_TagString: CardZone
@@ -858,7 +859,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropZones: 0
+  zoneLoader: {fileID: 8543082907534330193}
   dropBorder: {fileID: 4493535227694227323}
+--- !u!114 &8543082907534330193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7341875846332043373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f567fdd25484129ba46b53acb472042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valueText: {fileID: 440077044677958905}
 --- !u!1001 &817287009611938748
 PrefabInstance:
   m_ObjectHideFlags: 0

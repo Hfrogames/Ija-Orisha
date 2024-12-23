@@ -1,11 +1,12 @@
 using System;
+using MatchIt.Player.Script;
 using UnityEngine;
 
 public class DragItem : MonoBehaviour
 {
+    public CardLoader cardLoader;
     [field: SerializeField] public CardType CardID { get; private set; }
     [field: SerializeField] public RectTransform RectTransform { get; private set; }
-
 
     private DropZone _cachedDropZone;
     private Vector3 _cachedPosition;
@@ -23,20 +24,25 @@ public class DragItem : MonoBehaviour
 
     public void Select()
     {
-        if (_cachedDropZone)
-            _cachedDropZone.OnRemove(this);
         Init();
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        cardLoader.DisplayScore(true);
+
+        if (_cachedDropZone)
+            _cachedDropZone.OnRemove(this);
     }
 
     public void ResetItem()
     {
-        if (_cachedDropZone.dropZones != DropZone.DropZones.Deck)
+        if (_cachedDropZone.dropZones != DropZones.Deck)
+        {
             transform.position = _cachedPosition;
+            cardLoader.DisplayScore(false);
+        }
+
 
         transform.SetParent(_cachedDropZone.transform);
     }
-    
 }
 
 public enum CardType

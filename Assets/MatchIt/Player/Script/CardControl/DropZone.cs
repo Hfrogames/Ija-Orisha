@@ -1,18 +1,15 @@
+using MatchIt.Player.Script;
+using MatchIt.Player.Script.SO;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VInspector;
 
 
 public class DropZone : MonoBehaviour
 {
-    public enum DropZones
-    {
-        Attack,
-        Defence,
-        Deck
-    }
-
     [SerializeField] public DropZones dropZones;
+    [SerializeField] private ZoneLoader zoneLoader;
 
     private bool IsAttack => dropZones == DropZones.Attack;
     private bool IsDefence => dropZones == DropZones.Defence;
@@ -72,6 +69,9 @@ public class DropZone : MonoBehaviour
         itemRect.anchoredPosition = Vector3.zero;
         if (item.name.Contains("card"))
             item.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+
+        _droppedCard.cardLoader.DisplayScore(false);
+        zoneLoader.SetPoint(_droppedCard.cardLoader.cardSO, dropZones);
     }
 
     private void SetSpellPos(GameObject item)
@@ -101,4 +101,11 @@ public class DropZone : MonoBehaviour
         if (!IsDeck) return;
         item.transform.SetParent(transform);
     }
+}
+
+public enum DropZones
+{
+    Attack,
+    Defence,
+    Deck
 }

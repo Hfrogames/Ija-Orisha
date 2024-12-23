@@ -4,6 +4,12 @@ public enum Tags
     CardZone,
 }
 
+public enum Spells
+{
+    DoublePoint,
+    DividePoint
+}
+
 public enum Orisha
 {
     Ṣàngó,
