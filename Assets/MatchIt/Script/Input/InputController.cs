@@ -9,7 +9,7 @@ namespace MatchIt.Script.Input
         public void SetFollowItem(GameObject followItem, Transform rootCanvas)
         {
             _dragItem = followItem.GetComponent<DragItem>();
-            _dragItem.Init();
+            _dragItem.Select();
             _dragItem.transform.SetParent(rootCanvas);
         }
 

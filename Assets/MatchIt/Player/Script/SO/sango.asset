@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842f61dae8974ed0b3d00df30b9e17e3, type: 3}
-  m_Name: CardID_Hexagon
+  m_Name: sango
   m_EditorClassIdentifier: 
-  cardID: 2
-  sprite: {fileID: 21300000, guid: 5d719e393ea43754e8ce0ae4c2cd727d, type: 3}
+  <CardID>k__BackingField: 0
+  <Orisha>k__BackingField: 0
+  <AttackValue>k__BackingField: 10
+  <DefenceValue>k__BackingField: 4
+  cardSprite: {fileID: 1484802240, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}

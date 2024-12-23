@@ -10,21 +10,33 @@ public class DragItem : MonoBehaviour
     private DropZone _cachedDropZone;
     private Vector3 _cachedPosition;
 
-    public void Init()
+    private void Awake()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        _cachedDropZone = transform.GetComponentInParent<DropZone>();
+        _cachedPosition = transform.position;
+    }
+
+    public void Select()
     {
         if (_cachedDropZone)
             _cachedDropZone.OnRemove(this);
-
-
-        _cachedDropZone = transform.GetComponentInParent<DropZone>();
-        _cachedPosition = transform.position;
+        Init();
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 
     public void ResetItem()
     {
-        transform.position = _cachedPosition;
+        if (_cachedDropZone.dropZones != DropZone.DropZones.Deck)
+            transform.position = _cachedPosition;
+
+        transform.SetParent(_cachedDropZone.transform);
     }
+    
 }
 
 public enum CardType

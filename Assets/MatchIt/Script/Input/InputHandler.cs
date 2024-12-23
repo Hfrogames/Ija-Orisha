@@ -52,9 +52,7 @@ namespace MatchIt.Script.Input
 
             if (_isOnDropZone)
                 _inputController.SendToDropZone();
-
-            // _isOnDropZone = false;
-            // _inputController.UnSetActiveDropZone();
+            
         }
 
         private void OnPositionReset()

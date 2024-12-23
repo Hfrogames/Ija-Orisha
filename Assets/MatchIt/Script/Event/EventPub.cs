@@ -36,13 +36,13 @@ namespace MatchIt.Script.Event
             OnPlayEvent?.Invoke(playEvent);
         }
 
-        public delegate void CardSelected(Card clickedCard);
-
-        public static event CardSelected OnCardSelected;
-
-        public static void Emit(Card clickedCard)
-        {
-            OnCardSelected?.Invoke(clickedCard);
-        }
+        // public delegate void CardSelected(Card clickedCard);
+        //
+        // public static event CardSelected OnCardSelected;
+        //
+        // public static void Emit(Card clickedCard)
+        // {
+        //     OnCardSelected?.Invoke(clickedCard);
+        // }
     }
 }

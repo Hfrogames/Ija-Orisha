@@ -5,14 +5,14 @@ using VInspector;
 
 public class DropZone : MonoBehaviour
 {
-    private enum DropZones
+    public enum DropZones
     {
         Attack,
         Defence,
         Deck
     }
 
-    [SerializeField] private DropZones dropZones;
+    [SerializeField] public DropZones dropZones;
 
     private bool IsAttack => dropZones == DropZones.Attack;
     private bool IsDefence => dropZones == DropZones.Defence;
@@ -66,7 +66,7 @@ public class DropZone : MonoBehaviour
     {
         if (IsDeck) return;
         RectTransform itemRect = item.GetComponent<RectTransform>();
-        item.transform.parent = transform;
+        item.transform.SetParent(transform);
         itemRect.anchorMin = new Vector2(0.5f, 0.5f);
         itemRect.anchorMax = new Vector2(0.5f, 0.5f);
         itemRect.anchoredPosition = Vector3.zero;
@@ -99,6 +99,6 @@ public class DropZone : MonoBehaviour
     private void SetDeckParent(GameObject item)
     {
         if (!IsDeck) return;
-        item.transform.parent = transform;
+        item.transform.SetParent(transform);
     }
 }
