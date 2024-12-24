@@ -10,6 +10,7 @@ public class DropZone : MonoBehaviour
 {
     [SerializeField] public DropZones dropZones;
     [SerializeField] private ZoneLoader zoneLoader;
+    [SerializeField] private PackPlayerData playerData;
 
     private bool IsAttack => dropZones == DropZones.Attack;
     private bool IsDefence => dropZones == DropZones.Defence;
@@ -36,6 +37,7 @@ public class DropZone : MonoBehaviour
 
     public bool CanDrop(DragItem item)
     {
+        if (IsDeck) return true;
         if (item.CardID == CardType.Card && _droppedCard) return false;
         if (item.CardID == CardType.Spell && _droppedSpell) return false;
 
@@ -51,6 +53,8 @@ public class DropZone : MonoBehaviour
         SetCardPos(item);
         SetSpellPos(item);
         SetDeckParent(item);
+
+        SetPlayerData();
     }
 
     public void OnRemove(DragItem item)
@@ -61,7 +65,7 @@ public class DropZone : MonoBehaviour
 
     private void SetCardPos(GameObject item)
     {
-        if (IsDeck) return;
+        if (IsDeck || !item.name.Contains("card")) return;
         RectTransform itemRect = item.GetComponent<RectTransform>();
         item.transform.SetParent(transform);
         itemRect.anchorMin = new Vector2(0.5f, 0.5f);
@@ -79,6 +83,7 @@ public class DropZone : MonoBehaviour
         if (IsDeck || !item.name.Contains("spell")) return;
 
         RectTransform itemRect = item.GetComponent<RectTransform>();
+        item.transform.SetParent(transform);
         if (IsAttack)
         {
             itemRect.anchorMin = new Vector2(0f, .5f);
@@ -100,6 +105,14 @@ public class DropZone : MonoBehaviour
     {
         if (!IsDeck) return;
         item.transform.SetParent(transform);
+    }
+
+    private void SetPlayerData()
+    {
+        if (_droppedCard)
+            playerData.SetCards(_droppedCard.cardLoader.cardSO, dropZones);
+        if (_droppedSpell)
+            playerData.SetCards(_droppedSpell.cardLoader.cardSO, dropZones);
     }
 }
 
