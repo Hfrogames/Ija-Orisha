@@ -28,18 +28,6 @@ namespace MatchIt.Player.Script
                     _defenseSpell = card;
             }
         }
-
-
-        public class PlayData
-        {
-            public string AttackCard;
-            public string DefenseCard;
-            public string AttackSpell;
-            public string DefenseSpell;
-            public int AttackPoint;
-            public int DefensePoint;
-            public int PlayerHealth;
-        }
         
         public PlayData Pack()
         {

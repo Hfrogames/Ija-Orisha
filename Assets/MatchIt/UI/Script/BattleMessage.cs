@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MatchIt.Player.Script;
 using MatchIt.Script.Event;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace MatchIt.UI.Script
             {
                 case PlayEvent.OnFormationStart:
                     battleInfo.text = "Formation";
-                    formationCountDownImg.DOFillAmount(1, 5).From();
+                    formationCountDownImg.DOFillAmount(1, BattleManager.Instance.formationTimeout).From();
                     break;
                 case PlayEvent.OnFormationEnd:
                     formationCountDownImg.fillAmount = 0;

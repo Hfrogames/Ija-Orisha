@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using MatchIt.Script.Event;
 using UnityEngine;
@@ -7,6 +6,11 @@ namespace MatchIt.Player.Script
 {
     public class BattleManager : MonoBehaviour
     {
+        public PackPlayerData demoPlayerOneData; // demo only
+
+        [SerializeField] private PlayerLoader playerOneLoader;
+        [SerializeField] private PlayerLoader playerTwoLoader;
+        
         public static BattleManager Instance { get; private set; }
 
         private void Awake()
@@ -31,7 +35,7 @@ namespace MatchIt.Player.Script
             EventPub.OnPlayEvent -= OnPlayEvent;
         }
 
-        private float _formationTimeout = 5;
+        public float formationTimeout { get; private set; } = 10;
         private Coroutine _formationCoroutine;
         private Coroutine _battleCoroutine;
         private bool _isBattleStarted = false;
@@ -39,19 +43,6 @@ namespace MatchIt.Player.Script
         public PlayData PlayerOneData { get; private set; }
         public PlayData PlayerTwoData { get; private set; }
 
-        private void Start()
-        {
-            PlayerTwoData = new PlayData() // demo
-            {
-                AttackCard = "ogun",
-                DefenseCard = "osun",
-                AttackSpell = "double",
-                DefenseSpell = "divide",
-                AttackPoint = 10,
-                DefensePoint = 10,
-                PlayerHealth = 50
-            };
-        }
 
         public void SetPlayerOneData(PlayData playData)
         {
@@ -80,7 +71,7 @@ namespace MatchIt.Player.Script
         private IEnumerator FormationStart()
         {
             Debug.Log("formation start");
-            yield return new WaitForSeconds(_formationTimeout);
+            yield return new WaitForSeconds(formationTimeout);
 
             FormationEnd();
         }
@@ -99,22 +90,34 @@ namespace MatchIt.Player.Script
             Debug.Log("Formation data sent");
 
             // for demo only
+            SetBattleData();
             EventPub.Emit(PlayEvent.OnBattleData);
             _battleCoroutine = StartCoroutine(BattleStart());
+        }
+
+        private void SetBattleData()
+        {
+            PlayerTwoData = new PlayData() // demo
+            {
+                AttackCard = "ogun",
+                DefenseCard = "osun",
+                AttackSpell = "double",
+                DefenseSpell = "divide",
+                AttackPoint = 10,
+                DefensePoint = 10,
+                PlayerHealth = 50
+            };
+            
+            playerOneLoader.SetCards(PlayerOneData);
+            playerTwoLoader.SetCards(PlayerTwoData);
         }
 
         private IEnumerator BattleStart()
         {
             _isBattleStarted = true;
-            Debug.Log("Battle start");
             yield return new WaitForSeconds(2);
             // simulate battle
-            EventPub.Emit(PlayEvent.OnBattleStart);
-            Debug.Log("Battle started");
-
-            // simulate battle end
-            yield return new WaitForSeconds(2);
-            BattleWin();
+            SimulateBattle();
         }
 
         private void BattleWin()
@@ -128,6 +131,22 @@ namespace MatchIt.Player.Script
         private void BattleEnd()
         {
             // announce battle winner
+        }
+
+        private void SimulateBattle()
+        {
+            EventPub.Emit(PlayEvent.OnBattleStart);
+
+            // display card point
+            // apply spell
+            // attack player two defence
+            // attack player two health
+            // attack player one defence
+            // attack player one health
+            Debug.Log(JsonUtility.ToJson(PlayerOneData));
+            Debug.Log(JsonUtility.ToJson(PlayerTwoData));
+
+            BattleWin();
         }
     }
 }

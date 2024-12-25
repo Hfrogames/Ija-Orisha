@@ -1,9 +1,7 @@
-using System;
 using MatchIt.Player.Script;
 using MatchIt.Player.Script.SO;
 using MatchIt.Script.Event;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VInspector;
 
@@ -70,7 +68,6 @@ public class DropZone : MonoBehaviour
         }
     }
 
-
     public void OnHover()
     {
         if (IsDeck) return;
@@ -111,6 +108,7 @@ public class DropZone : MonoBehaviour
         if (item.CardID == CardType.Spell) _droppedSpell = null;
     }
 
+    
     private void SetCardPos(GameObject item)
     {
         if (IsDeck || !item.name.Contains("card")) return;

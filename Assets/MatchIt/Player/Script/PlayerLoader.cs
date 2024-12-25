@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace MatchIt.Player.Script
 {
-    public class PlayerTwoLoader : MonoBehaviour
+    public class PlayerLoader : MonoBehaviour
     {
         [SerializeField] private Sprite hiddenSprite;
 
@@ -20,8 +20,8 @@ namespace MatchIt.Player.Script
         [SerializeField] private TextMeshProUGUI defencePoint;
 
         private CardSO _attackCard;
-        private CardSO _defenceCard;
         private CardSO _attackSpell;
+        private CardSO _defenceCard;
         private CardSO _defenceSpell;
 
         private int _attackValue = 0; // fetched by server
@@ -45,17 +45,16 @@ namespace MatchIt.Player.Script
                 case PlayEvent.OnFormationStart:
                     ResetCardData();
                     break;
-                case PlayEvent.OnBattleData:
-                    SetCards(BattleManager.Instance.PlayerTwoData);
-                    break;
-                case PlayEvent.OnBattleStart:
-                    DisplayCardData();
-                    break;
+                // case PlayEvent.OnBattleData:
+                //     SetCards(BattleManager.Instance.PlayerTwoData);
+                //     break;
+                // case PlayEvent.OnBattleStart:
+                //     DisplayCardData();
+                //     break;
             }
         }
 
-
-        private void SetCards(PlayData playData)
+        public void SetCards(PlayData playData)
         {
             _attackCard = LocalDBManager.Instance.CardSoDB.GetCard(playData.AttackCard);
             _defenceCard = LocalDBManager.Instance.CardSoDB.GetCard(playData.DefenseCard);
@@ -67,7 +66,7 @@ namespace MatchIt.Player.Script
             _playerHealth = playData.PlayerHealth;
         }
 
-        private void DisplayCardData()
+        public void DisplayCardData()
         {
             attackCardImg.sprite = _attackCard.CardSprite;
             attackSpellImg.sprite = _attackSpell.CardSprite;
