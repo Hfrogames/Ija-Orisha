@@ -1,22 +1,36 @@
+using System;
+using DG.Tweening;
+using MatchIt.Script.Event;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MatchIt.UI.Script
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI winnerText;
-        [SerializeField] private GameObject winnerWrap;
+        [SerializeField] private Image formationCountDownImg;
 
-        public void DisplayWinner(string player)
+        private void OnEnable()
         {
-            winnerText.text = $"{player} wins!";
-            winnerWrap.SetActive(true);
+            EventPub.OnPlayEvent += OnPlayEvent;
         }
 
-        public void HideWinner()
+        private void OnDisable()
         {
-            winnerWrap.SetActive(false);
+            EventPub.OnPlayEvent -= OnPlayEvent;
+        }
+
+        private void OnPlayEvent(PlayEvent playEvent)
+        {
+            switch (playEvent)
+            {
+                case PlayEvent.OnFormationStart:
+                    formationCountDownImg.DOFillAmount(0, 2);
+                    break;
+                case PlayEvent.OnFormationEnd:
+                    break;
+            }
         }
     }
 }

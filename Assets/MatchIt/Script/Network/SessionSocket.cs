@@ -55,7 +55,7 @@ namespace MatchIt.Script.Network
                     EventPub.Emit(PlayEvent.OnSessionJoined);
                     break;
                 case "sessionStart":
-                    EventPub.Emit(PlayEvent.OnSessionStart);
+                    EventPub.Emit(PlayEvent.OnFormationStart);
                     break;
             }
         }

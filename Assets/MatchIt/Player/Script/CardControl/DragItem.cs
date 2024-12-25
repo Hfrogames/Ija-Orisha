@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DragItem : MonoBehaviour
 {
+    public bool isLocked;
     public CardLoader cardLoader;
     [field: SerializeField] public CardType CardID { get; private set; }
     [field: SerializeField] public RectTransform RectTransform { get; private set; }

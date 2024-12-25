@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -52,7 +53,6 @@ namespace MatchIt.Script.Input
 
             if (_isOnDropZone)
                 _inputController.SendToDropZone();
-            
         }
 
         private void OnPositionReset()
@@ -81,25 +81,33 @@ namespace MatchIt.Script.Input
             }
         }
 
+
         private void OnCardZone(GameObject hit)
         {
-            if (hit.CompareTag(cardZone.ToString()))
-            {
-                _isOnDropZone = true;
-                _inputController.SetActiveDropZone(hit);
-            }
+            if (!hit.CompareTag(cardZone.ToString())) return;
+
+            var cachedDropZone = hit.GetComponent<DropZone>();
+
+            if (cachedDropZone.IsLocked) return;
+
+            _isOnDropZone = true;
+            _inputController.SetActiveDropZone(hit);
         }
 
         private void OnCard(GameObject hit)
         {
-            if (hit.CompareTag(cards.ToString()))
-            {
-                if (!_isDragging)
-                {
-                    _isDragging = true;
-                    _inputController.SetFollowItem(hit, gamePlayGraphicsRaycaster.transform);
-                }
-            }
+            if (!hit.CompareTag(cards.ToString()) || _isDragging) return;
+
+            //
+            // if (!_isDragging)
+            // {            }
+
+            var cachedDragItem = hit.GetComponent<DragItem>();
+
+            if (cachedDragItem.isLocked) return;
+
+            _isDragging = true;
+            _inputController.SetFollowItem(hit, gamePlayGraphicsRaycaster.transform);
         }
     }
 }

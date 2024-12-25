@@ -20,7 +20,11 @@ namespace MatchIt.Script.Event
         OnSessionConnected,
         OnSessionDisconnected,
         OnSessionJoined,
-        OnSessionStart
+        OnFormationStart,
+        OnFormationEnd,
+        OnBattleData, // Server event
+        OnBattleStart,
+        OnBattleWin
     }
     
     
@@ -36,6 +40,7 @@ namespace MatchIt.Script.Event
             OnPlayEvent?.Invoke(playEvent);
         }
 
+        // Card event
         // public delegate void CardSelected(Card clickedCard);
         //
         // public static event CardSelected OnCardSelected;

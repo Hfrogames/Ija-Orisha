@@ -1,3 +1,5 @@
+using MatchIt.Script.Event;
+using MatchIt.Script.LocalDB;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,28 +19,55 @@ namespace MatchIt.Player.Script
         [SerializeField] private TextMeshProUGUI attackPoint;
         [SerializeField] private TextMeshProUGUI defencePoint;
 
-        public CardSO _attackCard;
-        public CardSO _defenceCard;
-        public CardSO _attackSpell;
-        public CardSO _defenceSpell;
+        private CardSO _attackCard;
+        private CardSO _defenceCard;
+        private CardSO _attackSpell;
+        private CardSO _defenceSpell;
 
-        private int _attackValue = 8; // fetched by server
-        private int _defenceValue = 8; // fetched by server
+        private int _attackValue = 0; // fetched by server
+        private int _defenceValue = 0; // fetched by server
+        private int _playerHealth = 0; // fetched by server
 
-        private void Start()
+        private void OnEnable()
         {
-            DisplayCardData();
+            EventPub.OnPlayEvent += OnPlayEvent;
         }
 
-        public void SetCards(PlayData playData)
+        private void OnDisable()
         {
-            // _attackCard = attackCard;
-            // _defenceCard = defenceCard;
-            // _attackSpell = attackSpell;
-            // _defenceSpell = defenceSpell;
+            EventPub.OnPlayEvent -= OnPlayEvent;
         }
 
-        public void DisplayCardData()
+        private void OnPlayEvent(PlayEvent playEvent)
+        {
+            switch (playEvent)
+            {
+                case PlayEvent.OnFormationStart:
+                    ResetCardData();
+                    break;
+                case PlayEvent.OnBattleData:
+                    SetCards(BattleManager.Instance.PlayerTwoData);
+                    break;
+                case PlayEvent.OnBattleStart:
+                    DisplayCardData();
+                    break;
+            }
+        }
+
+
+        private void SetCards(PlayData playData)
+        {
+            _attackCard = LocalDBManager.Instance.CardSoDB.GetCard(playData.AttackCard);
+            _defenceCard = LocalDBManager.Instance.CardSoDB.GetCard(playData.DefenseCard);
+            _attackSpell = LocalDBManager.Instance.CardSoDB.GetCard(playData.AttackSpell);
+            _defenceSpell = LocalDBManager.Instance.CardSoDB.GetCard(playData.DefenseSpell);
+
+            _attackValue = playData.AttackPoint;
+            _defenceValue = playData.DefensePoint;
+            _playerHealth = playData.PlayerHealth;
+        }
+
+        private void DisplayCardData()
         {
             attackCardImg.sprite = _attackCard.CardSprite;
             attackSpellImg.sprite = _attackSpell.CardSprite;
@@ -47,6 +76,17 @@ namespace MatchIt.Player.Script
 
             attackPoint.text = _attackValue.ToString();
             defencePoint.text = _defenceValue.ToString();
+            playerHealth.text = _playerHealth.ToString();
+        }
+
+        private void ResetCardData()
+        {
+            attackCardImg.sprite = hiddenSprite;
+            defenceCardImg.sprite = hiddenSprite;
+            attackSpellImg.sprite = hiddenSprite;
+            defenceSpellImg.sprite = hiddenSprite;
+            attackPoint.text = 0.ToString();
+            defencePoint.text = 0.ToString();
         }
     }
 }

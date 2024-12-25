@@ -11,17 +11,27 @@ namespace MatchIt.Script.Event
         {
             switch (playEvent)
             {
-                // case EventPub.PlayEvent.isPassed:
-                //     GameManager.Instance.SetGameState(GameManager.GameStates.Idle);
-                //     break;
-                // case EventPub.PlayEvent.isFailed:
-                //     GameManager.Instance.SetGameState(GameManager.GameStates.Idle);
-                //     break;
+                case PlayEvent.OnFormationStart:
+                    IsFormation = true;
+                    break;
+                case PlayEvent.OnFormationEnd:
+                    IsFormation = false;
+                    break;
+                case PlayEvent.OnBattleStart:
+                    InBattle = true;
+                    break;
+                case PlayEvent.OnBattleWin:
+                    InBattle = false;
+                    break;
             }
         }
 
+        public static bool IsFormation;
+        public static bool InBattle;
+
         public static void Initialize()
         {
+            // this should init general eventsub
         }
     }
 }

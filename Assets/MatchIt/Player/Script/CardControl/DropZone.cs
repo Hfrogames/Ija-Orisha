@@ -1,5 +1,7 @@
+using System;
 using MatchIt.Player.Script;
 using MatchIt.Player.Script.SO;
+using MatchIt.Script.Event;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -8,6 +10,7 @@ using VInspector;
 
 public class DropZone : MonoBehaviour
 {
+    public bool IsLocked { get; private set; } = false;
     [SerializeField] public DropZones dropZones;
     [SerializeField] private ZoneLoader zoneLoader;
     [SerializeField] private PackPlayerData playerData;
@@ -21,6 +24,51 @@ public class DropZone : MonoBehaviour
 
     private DragItem _droppedCard;
     private DragItem _droppedSpell;
+
+    private void OnEnable()
+    {
+        EventPub.OnPlayEvent += OnPlayEvent;
+    }
+
+    private void OnDisable()
+    {
+        EventPub.OnPlayEvent -= OnPlayEvent;
+    }
+
+    private void Start()
+    {
+        if (!IsDeck)
+            IsLocked = true;
+    }
+
+    private void OnPlayEvent(PlayEvent playEvent)
+    {
+        switch (playEvent)
+        {
+            case PlayEvent.OnFormationStart:
+                if (_droppedCard)
+                {
+                    _droppedCard.gameObject.SetActive(false);
+                    _droppedCard = null;
+                }
+
+                if (_droppedSpell)
+                {
+                    _droppedSpell.gameObject.SetActive(false);
+                    _droppedSpell = null;
+                }
+
+                IsLocked = false;
+                break;
+            case PlayEvent.OnFormationEnd:
+                if (_droppedCard)
+                    _droppedCard.isLocked = true;
+                if (_droppedSpell)
+                    _droppedSpell.isLocked = true;
+                IsLocked = true;
+                break;
+        }
+    }
 
 
     public void OnHover()

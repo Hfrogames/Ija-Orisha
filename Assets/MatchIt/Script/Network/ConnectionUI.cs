@@ -59,7 +59,7 @@ namespace MatchIt.Script.Network
                 case PlayEvent.OnSessionJoined:
                     joinGameSession.Success("joined");
                     break;
-                case PlayEvent.OnSessionStart:
+                case PlayEvent.OnFormationStart:
                     matchStarted.gameObject.SetActive(true);
                     SocMessage socData = SessionSocket.Instance.JoinData;
                     string matchDetails = $"{socData.playerOne} vs {socData.playerTwo}";
