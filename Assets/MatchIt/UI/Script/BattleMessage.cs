@@ -28,7 +28,7 @@ namespace MatchIt.UI.Script
             {
                 case PlayEvent.OnFormationStart:
                     battleInfo.text = "Formation";
-                    formationCountDownImg.DOFillAmount(1, BattleManager.Instance.formationTimeout).From();
+                    formationCountDownImg.DOFillAmount(1, BattleManager.Instance.FormationTimeout).From();
                     break;
                 case PlayEvent.OnFormationEnd:
                     formationCountDownImg.fillAmount = 0;

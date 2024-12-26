@@ -11,7 +11,7 @@ namespace MatchIt.Script.Event
         {
             switch (playEvent)
             {
-                case PlayEvent.OnFormationStart:
+                case PlayEvent.OnSessionStart:
                     IsFormation = true;
                     break;
                 case PlayEvent.OnFormationEnd:

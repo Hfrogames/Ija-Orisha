@@ -25,7 +25,7 @@ namespace MatchIt.UI.Script
         {
             switch (playEvent)
             {
-                case PlayEvent.OnFormationStart:
+                case PlayEvent.OnSessionStart:
                     formationCountDownImg.DOFillAmount(0, 2);
                     break;
                 case PlayEvent.OnFormationEnd:

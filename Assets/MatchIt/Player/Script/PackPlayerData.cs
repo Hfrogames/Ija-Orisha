@@ -4,33 +4,18 @@ namespace MatchIt.Player.Script
 {
     public class PackPlayerData : MonoBehaviour
     {
+        [SerializeField] private DropZone attackZone;
+        [SerializeField] private DropZone defenseZone;
+
         private CardSO _attackCard;
         private CardSO _attackSpell;
         private CardSO _defenseCard;
         private CardSO _defenseSpell;
 
-        public void SetCards(CardSO card, DropZones dropZones)
-        {
-            if (dropZones == DropZones.Attack)
-            {
-                if (card.CardID == CardType.Card)
-                    _attackCard = card;
-
-                if (card.CardID == CardType.Spell)
-                    _attackSpell = card;
-            }
-
-            if (dropZones == DropZones.Defence)
-            {
-                if (card.CardID == CardType.Card)
-                    _defenseCard = card;
-                if (card.CardID == CardType.Spell)
-                    _defenseSpell = card;
-            }
-        }
-        
         public PlayData Pack()
         {
+            SetCards();
+
             return new PlayData()
             {
                 AttackCard = _attackCard?.name ?? "None",
@@ -41,6 +26,14 @@ namespace MatchIt.Player.Script
                 DefensePoint = _defenseCard?.DefenceValue ?? 0,
                 PlayerHealth = 100
             };
+        }
+
+        private void SetCards()
+        {
+            _attackCard = attackZone.DroppedCard?.cardLoader.cardSO;
+            _attackSpell = attackZone.DroppedSpell?.cardLoader.cardSO;
+            _defenseCard = defenseZone.DroppedCard?.cardLoader.cardSO;
+            _defenseSpell = defenseZone.DroppedSpell?.cardLoader.cardSO;
         }
 
 

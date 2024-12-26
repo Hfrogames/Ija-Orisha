@@ -9,9 +9,10 @@ using VInspector;
 public class DropZone : MonoBehaviour
 {
     public bool IsLocked { get; private set; } = false;
+    public DragItem DroppedCard { get; private set; }
+    public DragItem DroppedSpell { get; private set; }
+
     [SerializeField] public DropZones dropZones;
-    [SerializeField] private ZoneLoader zoneLoader;
-    [SerializeField] private PackPlayerData playerData;
 
     private bool IsAttack => dropZones == DropZones.Attack;
     private bool IsDefence => dropZones == DropZones.Defence;
@@ -20,8 +21,6 @@ public class DropZone : MonoBehaviour
     [HideIf(nameof(IsDeck)), SerializeField]
     private Image dropBorder;
 
-    private DragItem _droppedCard;
-    private DragItem _droppedSpell;
 
     private void OnEnable()
     {
@@ -44,25 +43,26 @@ public class DropZone : MonoBehaviour
         switch (playEvent)
         {
             case PlayEvent.OnFormationStart:
-                if (_droppedCard)
+            case PlayEvent.OnBattleStart:
+                if (DroppedCard)
                 {
-                    _droppedCard.gameObject.SetActive(false);
-                    _droppedCard = null;
+                    DroppedCard.gameObject.SetActive(false);
+                    DroppedCard = null;
                 }
 
-                if (_droppedSpell)
+                if (DroppedSpell)
                 {
-                    _droppedSpell.gameObject.SetActive(false);
-                    _droppedSpell = null;
+                    DroppedSpell.gameObject.SetActive(false);
+                    DroppedSpell = null;
                 }
 
                 IsLocked = false;
                 break;
             case PlayEvent.OnFormationEnd:
-                if (_droppedCard)
-                    _droppedCard.isLocked = true;
-                if (_droppedSpell)
-                    _droppedSpell.isLocked = true;
+                if (DroppedCard)
+                    DroppedCard.isLocked = true;
+                if (DroppedSpell)
+                    DroppedSpell.isLocked = true;
                 IsLocked = true;
                 break;
         }
@@ -83,11 +83,11 @@ public class DropZone : MonoBehaviour
     public bool CanDrop(DragItem item)
     {
         if (IsDeck) return true;
-        if (item.CardID == CardType.Card && _droppedCard) return false;
-        if (item.CardID == CardType.Spell && _droppedSpell) return false;
+        if (item.CardID == CardType.Card && DroppedCard) return false;
+        if (item.CardID == CardType.Spell && DroppedSpell) return false;
 
-        if (item.CardID == CardType.Card) _droppedCard = item;
-        if (item.CardID == CardType.Spell) _droppedSpell = item;
+        if (item.CardID == CardType.Card) DroppedCard = item;
+        if (item.CardID == CardType.Spell) DroppedSpell = item;
 
         return true;
     }
@@ -98,17 +98,15 @@ public class DropZone : MonoBehaviour
         SetCardPos(item);
         SetSpellPos(item);
         SetDeckParent(item);
-
-        SetPlayerData();
     }
 
     public void OnRemove(DragItem item)
     {
-        if (item.CardID == CardType.Card) _droppedCard = null;
-        if (item.CardID == CardType.Spell) _droppedSpell = null;
+        if (item.CardID == CardType.Card) DroppedCard = null;
+        if (item.CardID == CardType.Spell) DroppedSpell = null;
     }
 
-    
+
     private void SetCardPos(GameObject item)
     {
         if (IsDeck || !item.name.Contains("card")) return;
@@ -120,8 +118,7 @@ public class DropZone : MonoBehaviour
         if (item.name.Contains("card"))
             item.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
 
-        _droppedCard.cardLoader.DisplayScore(false);
-        zoneLoader.SetPoint(_droppedCard.cardLoader.cardSO, dropZones);
+        DroppedCard.cardLoader.DisplayScore(false);
     }
 
     private void SetSpellPos(GameObject item)
@@ -151,14 +148,6 @@ public class DropZone : MonoBehaviour
     {
         if (!IsDeck) return;
         item.transform.SetParent(transform);
-    }
-
-    private void SetPlayerData()
-    {
-        if (_droppedCard)
-            playerData.SetCards(_droppedCard.cardLoader.cardSO, dropZones);
-        if (_droppedSpell)
-            playerData.SetCards(_droppedSpell.cardLoader.cardSO, dropZones);
     }
 }
 
