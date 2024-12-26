@@ -1,15 +1,13 @@
 using MatchIt.Player.Script;
 using MatchIt.Script.Event;
 using MatchIt.Script.Network;
-using MatchIt.Script.Utils;
-using UnityEngine;
-using NativeWebSocket;
 
-public class LobbySocket : MonoBehaviour
+public class LobbySocket : GameSocket
 {
     public static LobbySocket Instance { get; private set; }
 
-    private WebSocket _webSocket;
+    private string _socketURL = "ws://localhost:3000/lobby";
+    // private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/session";
 
     private void Awake()
     {
@@ -25,81 +23,33 @@ public class LobbySocket : MonoBehaviour
 
     private void Start()
     {
-        OpenConn();
+        Connect();
     }
 
-    void Update()
+    public void Connect()
     {
-        DispatchMessage();
+        OpenConn(_socketURL);
     }
 
-    private void DispatchMessage()
+    protected override void OnConnect()
     {
-#if !UNITY_WEBGL || UNITY_EDITOR
-        if (_webSocket != null)
-            _webSocket.DispatchMessageQueue();
-#endif
+        EventPub.Emit(PlayEvent.OnLobbyConnected);
     }
 
-    private async void OnApplicationQuit()
+    protected override void OnDisconnect(string errroMessage)
     {
-        await _webSocket.Close();
+        EventPub.Emit(PlayEvent.OnLobbyDisconnected);
     }
 
-
-    public async void OpenConn()
+    protected override void ManageSocResp(string socResponse)
     {
-        // _webSocket = new WebSocket("ws://localhost:3000/lobby");
-
-        _webSocket = new WebSocket("ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/lobby");
-        _webSocket.OnOpen += () => { EventPub.Emit(PlayEvent.OnLobbyConnected); };
-
-        _webSocket.OnError += (e) => { EventPub.Emit(PlayEvent.OnLobbyDisconnected); };
-
-        _webSocket.OnClose += (e) => { EventPub.Emit(PlayEvent.OnLobbyDisconnected); };
-
-        _webSocket.OnMessage += (bytes) =>
-        {
-            var message = System.Text.Encoding.UTF8.GetString(bytes);
-
-            Debug.Log(message);
-
-            SocMessage socResponse = JsonUtility.FromJson<SocMessage>(message);
-
-            ManageSocResp(socResponse);
-        };
-
-        await _webSocket.Connect();
-    }
-
-    public async void CloseConn()
-    {
-        if (_webSocket != null && _webSocket.State == WebSocketState.Open)
-        {
-            await _webSocket.Close();
-        }
-    }
-
-
-    private async void SendWebSocketMessage(SocMessage socMessage)
-    {
-        if (_webSocket.State == WebSocketState.Open)
-        {
-            string message = JsonUtility.ToJson(socMessage);
-            // Sending plain text
-            await _webSocket.SendText(message);
-        }
-    }
-
-    private void ManageSocResp(SocMessage socResponse)
-    {
-        switch (socResponse.action)
+        switch (socResponse)
         {
             case "lobbyJoined":
                 EventPub.Emit(PlayEvent.OnLobbyJoined);
                 break;
             case "sessionPaired":
-                SessionSocket.Instance.SetJoinData(socResponse);
+                SaveData.SetItem("sessionToken",socResponse);
                 EventPub.Emit(PlayEvent.OnSessionPaired);
                 break;
         }

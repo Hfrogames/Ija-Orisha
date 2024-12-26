@@ -9,8 +9,6 @@ namespace MatchIt.Player.Script
 
         public string PlayerID { get; private set; }
 
-        [SerializeField] private DemoPanel playerID;
-
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -26,7 +24,6 @@ namespace MatchIt.Player.Script
         private void Start()
         {
             PlayerID = Random2.GenerateRandomString(6);
-            playerID.Normal(PlayerID);
         }
     }
 }

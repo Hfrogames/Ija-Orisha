@@ -1,5 +1,6 @@
 using MatchIt.Player.Script;
 using MatchIt.Script.Event;
+using UnityEngine;
 
 namespace MatchIt.Script.Network
 {
@@ -7,9 +8,9 @@ namespace MatchIt.Script.Network
     {
         public static SessionSocket Instance { get; private set; }
 
-        // private string _socketURL = "ws://localhost:3000/session";
+        private string _socketURL = "ws://localhost:3000/session";
 
-        private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/session";
+        // private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/session";
         public SocMessage JoinData { get; private set; }
 
         private void Awake()
@@ -17,7 +18,6 @@ namespace MatchIt.Script.Network
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -40,7 +40,7 @@ namespace MatchIt.Script.Network
             EventPub.Emit(PlayEvent.OnSessionConnected);
         }
 
-        protected override void OnDisconnect()
+        protected override void OnDisconnect(string errorMessage)
         {
             EventPub.Emit(PlayEvent.OnSessionDisconnected);
         }
@@ -58,8 +58,9 @@ namespace MatchIt.Script.Network
             }
         }
 
-        public void SetJoinData(SocMessage joinData)
+        public void SetJoinData(string joinDataString)
         {
+            SocMessage joinData = JsonUtility.FromJson<SocMessage>(joinDataString);
             JoinData = new SocMessage()
             {
                 action = "join",

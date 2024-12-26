@@ -28,15 +28,13 @@ namespace MatchIt.Script.Network
 
         protected async void OpenConn(string socketURL)
         {
-            // _webSocket = new WebSocket("ws://localhost:3000/lobby");
 
             _webSocket = new WebSocket(socketURL);
-            // _webSocket = new WebSocket("ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com");
             _webSocket.OnOpen += () => OnConnect();
 
-            _webSocket.OnError += (e) => OnDisconnect();
+            _webSocket.OnError += (OnDisconnect);
 
-            _webSocket.OnClose += (e) => OnDisconnect();
+            _webSocket.OnClose += (OnDisconnect);
 
             _webSocket.OnMessage += (bytes) =>
             {
@@ -50,6 +48,14 @@ namespace MatchIt.Script.Network
             };
 
             await _webSocket.Connect();
+        }
+        
+        public async void CloseConn()
+        {
+            if (_webSocket != null && _webSocket.State == WebSocketState.Open)
+            {
+                await _webSocket.Close();
+            }
         }
 
         protected async void SendWebSocketMessage(SocMessage socMessage)
@@ -67,7 +73,12 @@ namespace MatchIt.Script.Network
             EventPub.Emit(PlayEvent.OnLobbyConnected);
         }
 
-        protected virtual void OnDisconnect()
+        protected virtual void OnDisconnect(string errorMessage)
+        {
+            EventPub.Emit(PlayEvent.OnLobbyDisconnected);
+        }
+        
+        protected virtual void OnDisconnect(WebSocketCloseCode errorMessage)
         {
             EventPub.Emit(PlayEvent.OnLobbyDisconnected);
         }
