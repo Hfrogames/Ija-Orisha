@@ -91,19 +91,19 @@ namespace MatchIt.Player.Script
                 DefenseCard = "ogun",
                 AttackSpell = "double",
                 DefenseSpell = "divide",
-                AttackPoint = 6,
-                DefensePoint = 8,
-                PlayerHealth = 50
+                AttackPoint = 50,
+                DefensePoint = 20,
+                PlayerHealth = 90
             };
             _playerTwoData = new PlayData() // demo
             {
-                AttackCard = "ogun",
+                AttackCard = "yemoja",
                 DefenseCard = "osun",
                 AttackSpell = "double",
                 DefenseSpell = "divide",
-                AttackPoint = 10,
+                AttackPoint = 30,
                 DefensePoint = 10,
-                PlayerHealth = 50
+                PlayerHealth = 60
             };
 
             playerOneLoader.SetCards(_playerOneData);
@@ -118,19 +118,19 @@ namespace MatchIt.Player.Script
             EventPub.Emit(PlayEvent.OnBattleStart);
 
             playerTwoLoader.DisplayCardData();
-            playerTwoLoader.ApplyCardSpell();
-
             playerOneLoader.DisplayCardData();
-            playerOneLoader.ApplyCardSpell();
 
-            // yield return new WaitForSeconds(4);
-            playerOneLoader.AttackDefence();
-            playerTwoLoader.DefenceAttacked();
+            // playerTwoLoader.ApplyCardSpell();
+            // playerOneLoader.ApplyCardSpell();
+
+            yield return new WaitForSeconds(3.8f);
+            playerOneLoader.AttackDefence(_playerTwoData.DefensePoint);
+            playerTwoLoader.DefenceAttacked(_playerOneData.AttackPoint);
             playerTwoLoader.AttackHealthPoint();
 
-            // yield return new WaitForSeconds(4);
-            playerTwoLoader.AttackDefence();
-            playerOneLoader.DefenceAttacked();
+            yield return new WaitForSeconds(3.5f);
+            playerTwoLoader.AttackDefence(_playerOneData.DefensePoint);
+            playerOneLoader.DefenceAttacked(_playerTwoData.AttackPoint);
             playerOneLoader.AttackHealthPoint();
 
             // yield return new WaitForSeconds(2);

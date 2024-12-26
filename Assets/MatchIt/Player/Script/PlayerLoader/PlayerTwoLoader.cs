@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEngine;
 
 namespace MatchIt.Player.Script
 {
@@ -6,18 +7,9 @@ namespace MatchIt.Player.Script
     {
         public override void DisplayCardData()
         {
-            Sequence displaySq = DOTween.Sequence();
-
-
-            displaySq
-                // Defence Spell
-                .AppendCallback(() =>
-                {
-                    defenceSpellFlip.gameObject.SetActive(true);
-                    defenceSpellImg.sprite = _defenceSpell?.CardSprite;
-                })
-                .Join(defenceSpellFlip.transform.DOScale(1, 0.2f).From(0).SetEase(Ease.OutSine))
-
+            base.DisplayCardData();
+            CardDataSq
+                
                 // Defence Card
                 .AppendCallback(() =>
                 {
@@ -33,28 +25,21 @@ namespace MatchIt.Player.Script
                     attackCardImg.sprite = _attackCard?.CardSprite;
                 })
                 .Append(attackCardFlip.transform.DOScale(1, 0.2f).From(0).SetEase(Ease.OutSine))
-
-                // Attack Spell
-                .AppendCallback(() =>
-                {
-                    attackSpellFlip.gameObject.SetActive(true);
-                    attackSpellImg.sprite = _attackSpell?.CardSprite;
-                })
-                .Join(attackSpellFlip.transform.DOScale(1, 0.2f).From(0).SetEase(Ease.OutSine))
-                .Append(attackSpellFlip.Flip())
+                
                 .Append(attackCardFlip.Flip())
                 .Append(defenceCardFlip.Flip())
-                .Append(defenceSpellFlip.Flip())
+       
 
                 // Optional: Add text animations for points
-                .Join(attackPoint.DOText(_attackCard?.AttackValue.ToString(), 0.5f))
-                .Join(defencePoint.DOText(_defenceCard?.AttackValue.ToString(), 0.5f));
-
-            // Optional: Add sequence completion callback if needed
-            displaySq.OnComplete(() =>
-            {
-                // Any code to run after all animations are complete
-            });
+                .AppendCallback(() =>
+                {
+                    attackPoint.text = _attackCard?.AttackValue.ToString();
+                    defencePoint.text = _defenceCard?.AttackValue.ToString();
+                    attackPoint.transform.parent.localScale = Vector3.zero;
+                    defencePoint.transform.parent.localScale = Vector3.zero;
+                })
+                .Join(attackPoint.transform.parent.DOScale(1, 0.2f).SetEase(Ease.OutSine))
+                .Join(defencePoint.transform.parent.DOScale(1, 0.2f).SetEase(Ease.OutSine));
         }
     }
 }

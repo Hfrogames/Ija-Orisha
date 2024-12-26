@@ -56,6 +56,8 @@ public class DropZone : MonoBehaviour
                     DroppedSpell = null;
                 }
 
+                transform.parent.localScale = Vector3.one;
+
                 IsLocked = false;
                 break;
             case PlayEvent.OnFormationEnd:
