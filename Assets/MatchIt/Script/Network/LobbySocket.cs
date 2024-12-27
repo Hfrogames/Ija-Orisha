@@ -1,6 +1,7 @@
 using MatchIt.Player.Script;
 using MatchIt.Script.Event;
 using MatchIt.Script.Network;
+using UnityEngine;
 
 public class LobbySocket : GameSocket
 {
@@ -41,15 +42,17 @@ public class LobbySocket : GameSocket
         EventPub.Emit(PlayEvent.OnLobbyDisconnected);
     }
 
-    protected override void ManageSocResp(string socResponse)
+    protected override void OnMessage(SocMessage socMessage)
     {
+        string socResponse = socMessage.action;
+
         switch (socResponse)
         {
             case "lobbyJoined":
                 EventPub.Emit(PlayEvent.OnLobbyJoined);
                 break;
             case "sessionPaired":
-                SaveData.SetItem("sessionToken",socResponse);
+                SaveData.SetItem("sessionToken", socMessage.Get());
                 EventPub.Emit(PlayEvent.OnSessionPaired);
                 break;
         }
@@ -64,13 +67,4 @@ public class LobbySocket : GameSocket
         };
         SendWebSocketMessage(joinData);
     }
-}
-
-public class SocMessage
-{
-    public string action;
-    public string roomID;
-    public string playerID;
-    public string playerOne;
-    public string playerTwo;
 }

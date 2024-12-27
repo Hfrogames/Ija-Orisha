@@ -1,6 +1,7 @@
 using System;
 using MatchIt.Script.Event;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MatchIt.Player.Script
 {
@@ -20,6 +21,11 @@ namespace MatchIt.Player.Script
             }
 
             EventSub.Initialize();
+        }
+
+        public void ReloadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

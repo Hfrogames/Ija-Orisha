@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using MatchIt.Script.Event;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +9,7 @@ namespace MatchIt.Player.Script
     public class BattleManager : MonoBehaviour
     {
         public static BattleManager Instance { get; private set; }
-        public float FormationTimeout { get; private set; } = 2;
+        public float FormationTimeout { get; private set; } = 10;
 
         [SerializeField] private PackPlayerData packPlayerData;
         [SerializeField] private PlayerLoader playerOneLoader;
@@ -48,7 +49,7 @@ namespace MatchIt.Player.Script
             switch (playEvent)
             {
                 case PlayEvent.OnSessionStart:
-                    _formationCoroutine ??= StartCoroutine(FormationStart());
+                    DOVirtual.DelayedCall(3f, () => { _formationCoroutine ??= StartCoroutine(FormationStart()); });
                     break;
                 case PlayEvent.OnBattleData:
                     _battleCoroutine ??= StartCoroutine(BattleStart());

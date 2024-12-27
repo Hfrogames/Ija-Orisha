@@ -1,5 +1,4 @@
 using MatchIt.Player.Script;
-using MatchIt.Script.Utils;
 using MatchIt.Script.Event;
 using TMPro;
 using UnityEngine;

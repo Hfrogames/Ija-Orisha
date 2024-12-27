@@ -27,7 +27,7 @@ namespace MatchIt.Script.Network
 
         private void Start()
         {
-            // Connect();
+            Connect();
         }
 
         public void Connect()
@@ -38,6 +38,7 @@ namespace MatchIt.Script.Network
         protected override void OnConnect()
         {
             EventPub.Emit(PlayEvent.OnSessionConnected);
+            Join();
         }
 
         protected override void OnDisconnect(string errorMessage)
@@ -45,21 +46,25 @@ namespace MatchIt.Script.Network
             EventPub.Emit(PlayEvent.OnSessionDisconnected);
         }
 
-        protected override void ManageSocResp(string socResponse)
+        protected override void OnMessage(SocMessage socMessage)
         {
+            string socResponse = socMessage.action;
+
             switch (socResponse)
             {
                 case "sessionJoined":
                     EventPub.Emit(PlayEvent.OnSessionJoined);
                     break;
                 case "sessionStart":
+                    
                     EventPub.Emit(PlayEvent.OnSessionStart);
                     break;
             }
         }
 
-        public void SetJoinData(string joinDataString)
+        public void Join()
         {
+            string joinDataString = SaveData.GetItemString("sessionToken");
             SocMessage joinData = JsonUtility.FromJson<SocMessage>(joinDataString);
             JoinData = new SocMessage()
             {
@@ -69,10 +74,6 @@ namespace MatchIt.Script.Network
                 playerOne = joinData.playerOne,
                 playerTwo = joinData.playerTwo
             };
-        }
-
-        public void Join()
-        {
             SendWebSocketMessage(JoinData);
         }
     }

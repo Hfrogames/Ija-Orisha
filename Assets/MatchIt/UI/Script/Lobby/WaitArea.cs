@@ -1,4 +1,3 @@
-using MatchIt.Player.Script;
 using TMPro;
 using UnityEngine;
 using MatchIt.Script.Event;
@@ -14,6 +13,9 @@ namespace MatchIt.UI.Script.Lobby
 
         [SerializeField] private RectTransform playerTwoRect;
         [SerializeField] private TextMeshProUGUI playerTwoText;
+
+        [SerializeField] private TextMeshProUGUI vs;
+        [SerializeField] private RectTransform battleButton;
 
         private void OnEnable()
         {
@@ -31,20 +33,27 @@ namespace MatchIt.UI.Script.Lobby
             {
                 case PlayEvent.OnLobbyJoined:
                     waitArea.gameObject.SetActive(true);
-                    playerOneText.text = PlayerManager.Instance.PlayerID;
                     break;
                 case PlayEvent.OnSessionPaired:
-                    DisplayPlayerTwo();
+                    DisplayGamePlayers();
                     break;
             }
         }
 
-        private void DisplayPlayerTwo()
+        private void DisplayGamePlayers()
         {
             string sessionToken = SaveData.GetItemString("sessionToken");
             SocMessage socResp = JsonUtility.FromJson<SocMessage>(sessionToken);
+
+            playerOneRect.gameObject.SetActive(true);
+            playerOneText.text = socResp.playerOne;
+
+            vs.text = "vs";
+
             playerTwoRect.gameObject.SetActive(true);
             playerTwoText.text = socResp.playerTwo;
+
+            battleButton.gameObject.SetActive(true);
         }
     }
 }
