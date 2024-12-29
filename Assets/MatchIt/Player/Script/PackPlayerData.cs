@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MatchIt.Player.Script
@@ -12,11 +13,11 @@ namespace MatchIt.Player.Script
         private CardSO _defenseCard;
         private CardSO _defenseSpell;
 
-        public PlayData Pack()
+        public BattleData Pack()
         {
             SetCards();
 
-            return new PlayData()
+            return new BattleData()
             {
                 AttackCard = _attackCard?.name ?? "None",
                 DefenseCard = _defenseCard?.name ?? "None",
@@ -44,7 +45,8 @@ namespace MatchIt.Player.Script
     }
 }
 
-public class PlayData
+[Serializable]
+public class BattleData
 {
     public string AttackCard;
     public string DefenseCard;

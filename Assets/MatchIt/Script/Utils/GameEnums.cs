@@ -6,8 +6,8 @@ public enum Tags
 
 public enum Spells
 {
-    DoublePoint,
-    DividePoint
+    doubleByTwo,
+    divideByTwo
 }
 
 public enum Orisha

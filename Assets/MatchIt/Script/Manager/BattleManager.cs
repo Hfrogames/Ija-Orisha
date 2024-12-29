@@ -1,6 +1,8 @@
 using System.Collections;
 using DG.Tweening;
+using MatchIt.Player.Script.CardControl;
 using MatchIt.Script.Event;
+using MatchIt.Script.Network;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,12 +13,16 @@ namespace MatchIt.Player.Script
         public static BattleManager Instance { get; private set; }
         public float FormationTimeout { get; private set; } = 10;
 
+        [SerializeField] private SessionSocket sessionSocket;
         [SerializeField] private PackPlayerData packPlayerData;
         [SerializeField] private PlayerLoader playerOneLoader;
         [SerializeField] private PlayerLoader playerTwoLoader;
+        [SerializeField] private DeckLoader deckLoader;
 
-        private PlayData _playerOneData;
-        private PlayData _playerTwoData;
+        private BattleData _playerOneData;
+        private BattleData _playerTwoData;
+        private SocMessage _joinData;
+        private string _playerID;
 
         private Coroutine _formationCoroutine;
         private Coroutine _battleCoroutine;
@@ -36,11 +42,13 @@ namespace MatchIt.Player.Script
         private void OnEnable()
         {
             EventPub.OnPlayEvent += OnPlayEvent;
+            EventPub.OnSocketMessage += OnSocketMessage;
         }
 
         private void OnDisable()
         {
             EventPub.OnPlayEvent -= OnPlayEvent;
+            EventPub.OnSocketMessage -= OnSocketMessage;
         }
 
 
@@ -49,11 +57,48 @@ namespace MatchIt.Player.Script
             switch (playEvent)
             {
                 case PlayEvent.OnSessionStart:
-                    DOVirtual.DelayedCall(3f, () => { _formationCoroutine ??= StartCoroutine(FormationStart()); });
+                    string joinDataString = SaveData.GetItemString("sessionToken");
+                    _joinData = JsonUtility.FromJson<SocMessage>(joinDataString);
+                    deckLoader.Reveal();
                     break;
-                case PlayEvent.OnBattleData:
-                    _battleCoroutine ??= StartCoroutine(BattleStart());
-                    break;
+            }
+        }
+
+        private void OnSocketMessage(SocMessage message)
+        {
+            if (message.action == "formationStart")
+            {
+                playerOneLoader.DisplayPlayerHealth(message.playerOneBD.PlayerHealth);
+                playerTwoLoader.DisplayPlayerHealth(message.playerTwoBD.PlayerHealth);
+
+                FormationTimeout = message.roundTimeout;
+                _formationCoroutine ??= StartCoroutine(FormationStart());
+            }
+
+            if (message.action == "formationEnd")
+            {
+                FormationEnd();
+            }
+
+            if (message.action == "battleData")
+            {
+                if (PlayerManager.Instance.PlayerID == _joinData.playerOne)
+                {
+                    _playerOneData = message.playerOneBD;
+                    _playerTwoData = message.playerTwoBD;
+                }
+                else if (PlayerManager.Instance.PlayerID == _joinData.playerTwo)
+                {
+                    _playerOneData = message.playerTwoBD;
+                    _playerTwoData = message.playerOneBD;
+                    
+                }
+                
+                playerOneLoader.SetCards(_playerOneData);
+                playerTwoLoader.SetCards(_playerTwoData);
+
+                EventPub.Emit(PlayEvent.OnBattleData);
+                _battleCoroutine ??= StartCoroutine(BattleStart());
             }
         }
 
@@ -76,39 +121,24 @@ namespace MatchIt.Player.Script
 
             EventPub.Emit(PlayEvent.OnFormationEnd);
             // send player one battle data to server
-            Debug.Log("Formation data sent");
+            SendBattleData();
 
             // for demo only
-            SetBattleData();
-            EventPub.Emit(PlayEvent.OnBattleData);
+            // SetBattleData();
+            // EventPub.Emit(PlayEvent.OnBattleData);
         }
 
-        private void SetBattleData()
+        private void SendBattleData()
         {
-            // _playerOneData = packPlayerData.Pack();
-            _playerOneData = new PlayData() // demo
+            SocMessage battleData = new SocMessage()
             {
-                AttackCard = "sango",
-                DefenseCard = "ogun",
-                AttackSpell = "double",
-                DefenseSpell = "divide",
-                AttackPoint = 50,
-                DefensePoint = 20,
-                PlayerHealth = 90
-            };
-            _playerTwoData = new PlayData() // demo
-            {
-                AttackCard = "yemoja",
-                DefenseCard = "osun",
-                AttackSpell = "double",
-                DefenseSpell = "divide",
-                AttackPoint = 30,
-                DefensePoint = 10,
-                PlayerHealth = 60
+                action = "getBattleData",
+                playerID = PlayerManager.Instance.PlayerID,
+                roomID = _joinData.roomID,
+                playerOneBD = packPlayerData.Pack()
             };
 
-            playerOneLoader.SetCards(_playerOneData);
-            playerTwoLoader.SetCards(_playerTwoData);
+            sessionSocket.SendWebSocketMessage(battleData);
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
@@ -120,9 +150,6 @@ namespace MatchIt.Player.Script
 
             playerTwoLoader.DisplayCardData();
             playerOneLoader.DisplayCardData();
-
-            // playerTwoLoader.ApplyCardSpell();
-            // playerOneLoader.ApplyCardSpell();
 
             yield return new WaitForSeconds(3.8f);
             playerOneLoader.AttackDefence(_playerTwoData.DefensePoint);

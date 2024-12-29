@@ -9,7 +9,7 @@ namespace MatchIt.Player.Script
         {
             base.DisplayCardData();
             CardDataSq
-                
+
                 // Defence Card
                 .AppendCallback(() =>
                 {
@@ -25,10 +25,8 @@ namespace MatchIt.Player.Script
                     attackCardImg.sprite = _attackCard?.CardSprite;
                 })
                 .Append(attackCardFlip.transform.DOScale(1, 0.2f).From(0).SetEase(Ease.OutSine))
-                
                 .Append(attackCardFlip.Flip())
                 .Append(defenceCardFlip.Flip())
-       
 
                 // Optional: Add text animations for points
                 .AppendCallback(() =>

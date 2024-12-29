@@ -32,12 +32,13 @@ namespace MatchIt.UI.Script
                     break;
                 case PlayEvent.OnFormationEnd:
                     formationCountDownImg.fillAmount = 0;
+                    battleInfo.text = "Sending data";
                     break;
                 case PlayEvent.OnBattleStart:
                     battleInfo.text = "Battle Started";
                     break;
                 case PlayEvent.OnBattleWin:
-                    battleInfo.text = "Formation";
+                    battleInfo.text = "Battle";
                     break;
             }
         }

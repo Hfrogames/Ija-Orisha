@@ -1,3 +1,4 @@
+using System;
 using MatchIt.Script.Event;
 using UnityEngine;
 using NativeWebSocket;
@@ -58,7 +59,7 @@ public class GameSocket : MonoBehaviour
         }
     }
 
-    protected async void SendWebSocketMessage(SocMessage socMessage)
+    public async void SendWebSocketMessage(SocMessage socMessage)
     {
         if (_webSocket.State == WebSocketState.Open)
         {
@@ -88,6 +89,7 @@ public class GameSocket : MonoBehaviour
     }
 }
 
+[Serializable]
 public class SocMessage
 {
     public string action;
@@ -95,6 +97,11 @@ public class SocMessage
     public string playerID;
     public string playerOne;
     public string playerTwo;
+    public BattleData playerOneBD;
+    public BattleData playerTwoBD;
+    public int roundTimeout;
+    public int currentRound;
+    public int totalRounds;
 
     public string Get()
     {

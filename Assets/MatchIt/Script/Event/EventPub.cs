@@ -21,14 +21,14 @@ namespace MatchIt.Script.Event
         OnSessionDisconnected,
         OnSessionJoined,
         OnSessionStart,
+        OnRoundData, // Server event
         OnFormationStart,
         OnFormationEnd,
         OnBattleData, // Server event
         OnBattleStart,
         OnBattleWin
     }
-    
-    
+
 
     public class EventPub
     {
@@ -41,14 +41,14 @@ namespace MatchIt.Script.Event
             OnPlayEvent?.Invoke(playEvent);
         }
 
-        // Card event
-        // public delegate void CardSelected(Card clickedCard);
-        //
-        // public static event CardSelected OnCardSelected;
-        //
-        // public static void Emit(Card clickedCard)
-        // {
-        //     OnCardSelected?.Invoke(clickedCard);
-        // }
+        // Socket response
+        public delegate void SocketMessage(SocMessage message);
+
+        public static event SocketMessage OnSocketMessage;
+
+        public static void Emit(SocMessage message)
+        {
+            OnSocketMessage?.Invoke(message);
+        }
     }
 }

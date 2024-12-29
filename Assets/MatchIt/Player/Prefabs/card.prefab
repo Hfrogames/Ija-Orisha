@@ -154,7 +154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4093446621894460578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8160247934609629739
 RectTransform:
   m_ObjectHideFlags: 0
@@ -707,9 +707,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7c93ffdc7c4b24b7819995b18b3096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLocked: 0
   cardLoader: {fileID: 7753130400618988413}
+  isRevealed: 0
   <CardID>k__BackingField: 0
   <RectTransform>k__BackingField: {fileID: 7426556852837254214}
+  flip: {fileID: 0}
+  attackScore: {fileID: 8160247934609629739}
+  defenceScore: {fileID: 4093446621894460578}
 --- !u!114 &7753130400618988413
 MonoBehaviour:
   m_ObjectHideFlags: 0

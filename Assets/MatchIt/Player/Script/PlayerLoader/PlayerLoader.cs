@@ -76,24 +76,29 @@ namespace MatchIt.Player.Script
             defencePoint.text = 0.ToString();
         }
 
-        public void SetCards(PlayData playData)
+        public void SetCards(BattleData battleData)
         {
-            _attackCard = LocalDBManager.Instance.CardSoDB.GetCard(playData.AttackCard);
-            _attackSpell = LocalDBManager.Instance.CardSoDB.GetCard(playData.AttackSpell);
-            _defenceCard = LocalDBManager.Instance.CardSoDB.GetCard(playData.DefenseCard);
-            _defenceSpell = LocalDBManager.Instance.CardSoDB.GetCard(playData.DefenseSpell);
+            _attackCard = LocalDBManager.Instance.CardSoDB.GetCard(battleData.AttackCard);
+            _attackSpell = LocalDBManager.Instance.CardSoDB.GetCard(battleData.AttackSpell);
+            _defenceCard = LocalDBManager.Instance.CardSoDB.GetCard(battleData.DefenseCard);
+            _defenceSpell = LocalDBManager.Instance.CardSoDB.GetCard(battleData.DefenseSpell);
 
-            _attackValue = playData.AttackPoint;
-            _defenceValue = playData.DefensePoint;
-            _playerHealth = playData.PlayerHealth;
+            _attackValue = battleData.AttackPoint;
+            _defenceValue = battleData.DefensePoint;
+            _playerHealth = battleData.PlayerHealth;
         }
 
         public virtual void DisplayCardData()
         {
             CardDataSq = DOTween.Sequence();
+
             CardDataSq.OnComplete(ApplyCardSpell);
         }
 
+        public void DisplayPlayerHealth(int health)
+        {
+            playerHealth.text = health.ToString();
+        }
 
         public virtual void ApplyCardSpell()
         {

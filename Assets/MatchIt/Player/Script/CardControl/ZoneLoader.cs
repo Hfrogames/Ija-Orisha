@@ -33,9 +33,9 @@ namespace MatchIt.Player.Script.SO
             if (_spell)
                 switch (_spell.spell)
                 {
-                    case Spells.DoublePoint:
+                    case Spells.doubleByTwo:
                         break;
-                    case Spells.DividePoint:
+                    case Spells.divideByTwo:
                         break;
                 }
 

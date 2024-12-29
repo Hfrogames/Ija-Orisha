@@ -56,8 +56,13 @@ namespace MatchIt.Script.Network
                     EventPub.Emit(PlayEvent.OnSessionJoined);
                     break;
                 case "sessionStart":
-                    
                     EventPub.Emit(PlayEvent.OnSessionStart);
+                    break;
+                case "formationStart":
+                case "formationEnd":
+                case "battleData":
+                case "sessionEnd":
+                    EventPub.Emit(socMessage);
                     break;
             }
         }
