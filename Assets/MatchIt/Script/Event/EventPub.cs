@@ -21,6 +21,7 @@ namespace MatchIt.Script.Event
         OnSessionDisconnected,
         OnSessionJoined,
         OnSessionStart,
+        OnSessionEnd,
         OnRoundData, // Server event
         OnFormationStart,
         OnFormationEnd,

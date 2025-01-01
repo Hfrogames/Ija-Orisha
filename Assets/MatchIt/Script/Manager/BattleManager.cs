@@ -68,8 +68,16 @@ namespace MatchIt.Player.Script
         {
             if (message.action == "formationStart")
             {
-                playerOneLoader.DisplayPlayerHealth(message.playerOneBD.PlayerHealth);
-                playerTwoLoader.DisplayPlayerHealth(message.playerTwoBD.PlayerHealth);
+                if (PlayerManager.Instance.PlayerID == _joinData.playerOne)
+                {
+                    playerOneLoader.DisplayPlayerHealth(message.playerOneBD.PlayerHealth);
+                    playerTwoLoader.DisplayPlayerHealth(message.playerTwoBD.PlayerHealth);
+                }
+                else if (PlayerManager.Instance.PlayerID == _joinData.playerTwo)
+                {
+                    playerOneLoader.DisplayPlayerHealth(message.playerTwoBD.PlayerHealth);
+                    playerTwoLoader.DisplayPlayerHealth(message.playerOneBD.PlayerHealth);
+                }
 
                 FormationTimeout = message.roundTimeout;
                 _formationCoroutine ??= StartCoroutine(FormationStart());
@@ -91,14 +99,18 @@ namespace MatchIt.Player.Script
                 {
                     _playerOneData = message.playerTwoBD;
                     _playerTwoData = message.playerOneBD;
-                    
                 }
-                
+
                 playerOneLoader.SetCards(_playerOneData);
                 playerTwoLoader.SetCards(_playerTwoData);
 
                 EventPub.Emit(PlayEvent.OnBattleData);
                 _battleCoroutine ??= StartCoroutine(BattleStart());
+            }
+            
+            if (message.action == "battleEnd")
+            {
+                BattleEnd();
             }
         }
 
@@ -179,6 +191,7 @@ namespace MatchIt.Player.Script
 
         private void BattleEnd()
         {
+            EventPub.Emit(PlayEvent.OnSessionEnd);
             // announce battle winner
         }
     }

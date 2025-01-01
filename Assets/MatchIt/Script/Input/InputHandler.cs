@@ -102,7 +102,7 @@ namespace MatchIt.Script.Input
             // if (!_isDragging)
             // {            }
 
-            var cachedDragItem = hit.GetComponent<DragItem>();
+            var cachedDragItem = hit.GetComponent<Card>();
 
             if (cachedDragItem.isLocked) return;
 

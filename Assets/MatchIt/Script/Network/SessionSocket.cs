@@ -8,9 +8,9 @@ namespace MatchIt.Script.Network
     {
         public static SessionSocket Instance { get; private set; }
 
-        private string _socketURL = "ws://localhost:3000/session";
+        // private string _socketURL = "ws://localhost:3000/session";
 
-        // private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/session";
+        private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/session";
         public SocMessage JoinData { get; private set; }
 
         private void Awake()

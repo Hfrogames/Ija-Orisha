@@ -4,28 +4,29 @@ namespace MatchIt.Script.Input
 {
     public class InputController
     {
-        private DragItem _dragItem;
+        private Card _card;
 
         public void SetFollowItem(GameObject followItem, Transform rootCanvas)
         {
-            _dragItem = followItem.GetComponent<DragItem>();
-            _dragItem.Select();
-            _dragItem.transform.SetParent(rootCanvas);
+            _card = followItem.GetComponent<Card>();
+            _card.Select();
+            _card.transform.SetParent(rootCanvas);
         }
 
         public void FollowPosition(Vector3 touchPosition)
         {
-            if (!_dragItem) return;
-            _dragItem.transform.position = touchPosition;
+            if (!_card) return;
+            _card.transform.position =
+                Vector3.Lerp(_card.transform.position, touchPosition, 30 * Time.deltaTime);
         }
 
         public void UnSetFollow()
         {
-            if (!_dragItem) return;
+            if (!_card) return;
 
-            _dragItem.ResetItem();
-            _dragItem.transform.localScale = Vector3.one;
-            _dragItem = null;
+            _card.ResetItem();
+
+            _card = null;
         }
 
         private GameObject _activeDzGob;
@@ -36,8 +37,8 @@ namespace MatchIt.Script.Input
             _activeDzGob = dropZone;
             _activeDropZone = dropZone.GetComponent<DropZone>();
 
-            if (_dragItem)
-                _activeDropZone.OnHover();
+            if (_card)
+                _activeDropZone.OnHover(_card.gameObject);
         }
 
         public void UnSetActiveDropZone()
@@ -50,12 +51,20 @@ namespace MatchIt.Script.Input
 
         public void SendToDropZone()
         {
-            if (!_dragItem || !_activeDzGob) return;
-            if (_activeDropZone.CanDrop(_dragItem))
+            if (!_card || !_activeDzGob) return;
+            
+            if (_card._cachedDropZone == _activeDropZone)
+            {
+                _card.ResetItem();
+                _card = null;
+                return;
+            }
+
+            if (_activeDropZone.CanDrop(_card))
             {
                 // _followItemParentDropZone.OnRemove();
-                _activeDropZone.OnDrop(_dragItem.gameObject);
-                _dragItem = null;
+                _activeDropZone.OnDrop(_card);
+                _card = null;
                 _activeDzGob = null;
             }
             else

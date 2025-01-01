@@ -30,3 +30,9 @@ public class CardSO : ScriptableObject
     public int spellValue { get; private set; }
   
 }
+
+public enum CardType
+{
+    Card,
+    Spell
+}

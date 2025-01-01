@@ -40,6 +40,9 @@ namespace MatchIt.UI.Script
                 case PlayEvent.OnBattleWin:
                     battleInfo.text = "Battle";
                     break;
+                case PlayEvent.OnSessionEnd:
+                    battleInfo.text = "Reload";
+                    break;
             }
         }
     }

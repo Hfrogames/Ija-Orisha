@@ -12,17 +12,24 @@ namespace MatchIt.Player.Script
         [SerializeField] private TextMeshProUGUI attackValueText;
         [SerializeField] private TextMeshProUGUI defenceValueText;
 
-        private void Start()
+        // private void Start()
+        // {
+        //     SetCardValue();
+        //     SetSpellValue();
+        // }
+        
+        public void SetCard(CardSO cardSO)
         {
+            this.cardSO = cardSO;
             SetCardValue();
             SetSpellValue();
         }
 
-        public void DisplayScore(bool score)
-        {
-            attackValueText.transform.parent.gameObject.SetActive(score);
-            defenceValueText.transform.parent.gameObject.SetActive(score);
-        }
+        // public void DisplayScore(bool score)
+        // {
+        //     attackValueText.transform.parent.gameObject.SetActive(score);
+        //     defenceValueText.transform.parent.gameObject.SetActive(score);
+        // }
 
         private void SetCardValue()
         {

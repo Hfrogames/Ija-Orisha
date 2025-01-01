@@ -21,8 +21,8 @@ namespace MatchIt.Player.Script
             {
                 AttackCard = _attackCard?.name ?? "None",
                 DefenseCard = _defenseCard?.name ?? "None",
-                AttackSpell = _attackSpell?.name ?? "None",
-                DefenseSpell = _defenseSpell?.name ?? "None",
+                AttackSpell = _attackSpell?.spell.ToString() ?? "None",
+                DefenseSpell = _defenseSpell?.spell.ToString() ?? "None",
                 AttackPoint = _attackCard?.AttackValue ?? 0,
                 DefensePoint = _defenseCard?.DefenceValue ?? 0,
                 PlayerHealth = 100

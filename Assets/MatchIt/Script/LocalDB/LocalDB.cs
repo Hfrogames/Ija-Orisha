@@ -28,6 +28,17 @@ namespace MatchIt.Script.LocalDB
 
             return null;
         }
+
+        public CardSO GetRandom()
+        {
+            if (!IsCardSo || cardSo == null || cardSo.Length == 0)
+            {
+                return null;
+            }
+
+            int randomIndex = UnityEngine.Random.Range(0, cardSo.Length);
+            return cardSo[randomIndex];
+        }
     }
 }
 
