@@ -33,9 +33,9 @@ namespace IjaOrisha.Player.Script
         private void SetCards()
         {
             _attackCard = attackZone.DroppedCard?.cardLoader.cardSO;
-            _attackSpell = attackZone.DroppedSpell?.cardLoader.cardSO;
+            // _attackSpell = attackZone.DroppedSpell?.cardLoader.cardSO;
             _defenseCard = defenseZone.DroppedCard?.cardLoader.cardSO;
-            _defenseSpell = defenseZone.DroppedSpell?.cardLoader.cardSO;
+            // _defenseSpell = defenseZone.DroppedSpell?.cardLoader.cardSO;
         }
 
 

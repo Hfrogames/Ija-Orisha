@@ -99,10 +99,6 @@ namespace IjaOrisha.Script.Input
         {
             if (!hit.CompareTag(cards.ToString()) || _isDragging) return;
 
-            //
-            // if (!_isDragging)
-            // {            }
-
             var cachedDragItem = hit.GetComponent<Card>();
 
             if (cachedDragItem.isLocked) return;

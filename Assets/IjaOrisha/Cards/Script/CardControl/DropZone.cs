@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VInspector;
 
@@ -8,22 +9,25 @@ namespace IjaOrisha.Cards.Script.CardControl
     {
         public bool IsLocked { get; private set; } = false;
         public Card DroppedCard { get; private set; }
-        public Card DroppedSpell { get; private set; }
 
         [SerializeField] public DropZones dropZones;
 
-
         private bool IsAttack => dropZones == DropZones.Attack;
         private bool IsDefence => dropZones == DropZones.Defence;
+        private bool IsSpell => dropZones == DropZones.Spell;
         private bool IsDeck => dropZones == DropZones.Deck;
+
 
         [SerializeField] private DeckLoader deckLoader;
 
         [HideIf(nameof(IsDeck)), SerializeField]
-        private Image dropBorder;
+        private CardType cardType;
 
         [HideIf(nameof(IsDeck)), SerializeField]
-        public RectTransform emptyBorder;
+        private RectTransform dropBorder;
+
+        [HideIf(nameof(IsDeck)), SerializeField]
+        public RectTransform zoneBackG;
 
 
         private void OnEnable()
@@ -38,8 +42,8 @@ namespace IjaOrisha.Cards.Script.CardControl
 
         private void Start()
         {
-            if (!IsDeck)
-                IsLocked = true;
+            // if (!IsDeck) // test only
+            IsLocked = false;
 
             if (!deckLoader) deckLoader = GetComponentInParent<DeckLoader>();
         }
@@ -56,52 +60,41 @@ namespace IjaOrisha.Cards.Script.CardControl
                         DroppedCard = null;
                     }
 
-                    if (DroppedSpell)
-                    {
-                        DroppedSpell.gameObject.SetActive(false);
-                        DroppedSpell = null;
-                    }
-
                     transform.parent.localScale = Vector3.one;
-
                     IsLocked = false;
                     break;
                 case PlayEvent.OnFormationEnd:
                     if (DroppedCard)
                         DroppedCard.isLocked = true;
-                    if (DroppedSpell)
-                        DroppedSpell.isLocked = true;
                     IsLocked = true;
                     break;
             }
         }
 
-        public void OnHover(GameObject item = null)
+        public void OnHover(Card item = null)
         {
             ArrangeDeck(item);
 
-            if (!IsDeck)
-                dropBorder.color = new Color32(29, 255, 0, 100);
+            if (!IsDeck && item.CardID == cardType && !DroppedCard)
+                dropBorder.gameObject.SetActive(true);
         }
 
         public void OnHoverOut()
         {
             if (IsDeck) return;
-            dropBorder.color = new Color32(29, 255, 0, 0);
+            dropBorder.gameObject.SetActive(false);
         }
 
         public bool CanDrop(Card item)
         {
             if (IsDeck) return true;
-            if (item.CardID == CardType.Card && DroppedCard) return false;
-            if (item.CardID == CardType.Spell && DroppedSpell) return false;
 
-            if (item.CardID == CardType.Card) DroppedCard = item;
-            if (item.CardID == CardType.Spell) DroppedSpell = item;
+            if (item.CardID != cardType || DroppedCard) return false;
 
-            if (DroppedCard || DroppedSpell)
-                emptyBorder.gameObject.SetActive(false);
+            if (item.CardID == cardType) DroppedCard = item;
 
+            if (DroppedCard)
+                zoneBackG.gameObject.SetActive(false);
 
             return true;
         }
@@ -110,45 +103,45 @@ namespace IjaOrisha.Cards.Script.CardControl
         {
             card.transform.localScale = Vector3.one;
             SetCardPos(card);
-            SetSpellPos(card);
+            // SetSpellPos(card);
             SetDeckParent(card);
         }
 
         public void OnRemove(Card item)
         {
-            if (item.CardID == CardType.Card) DroppedCard = null;
-            if (item.CardID == CardType.Spell) DroppedSpell = null;
+            if (item.CardID == cardType) DroppedCard = null;
 
             if (!IsDeck)
             {
                 deckLoader.AppendCard(item);
 
-                if (!DroppedCard && !DroppedSpell)
-                    emptyBorder.gameObject.SetActive(true);
+                if (!DroppedCard)
+                    zoneBackG.gameObject.SetActive(true);
             }
         }
 
 
         private void SetCardPos(Card card)
         {
-            if (IsDeck || card.CardID == CardType.Spell) return;
+            if (IsDeck || card.CardID != cardType) return;
 
             deckLoader.RemoveCard(card);
 
             card._cachedDropZone = this;
 
             card.transform.SetParent(transform);
+            card.ResetItem();
         }
 
-        private void SetSpellPos(Card card)
-        {
-            if (IsDeck || card.CardID == CardType.Card) return;
-
-            deckLoader.RemoveCard(card);
-
-            card._cachedDropZone = this;
-            card.transform.SetParent(transform);
-        }
+        // private void SetSpellPos(Card card)
+        // {
+        //     if (IsDeck || card.CardID == CardType.Card) return;
+        //
+        //     deckLoader.RemoveCard(card);
+        //
+        //     card._cachedDropZone = this;
+        //     card.transform.SetParent(transform);
+        // }
 
         private void SetDeckParent(Card card)
         {
@@ -156,11 +149,10 @@ namespace IjaOrisha.Cards.Script.CardControl
             card.ResetItem();
         }
 
-        private void ArrangeDeck(GameObject item)
+        private void ArrangeDeck(Card item)
         {
             if (!IsDeck) return;
-            Card card = item.GetComponent<Card>();
-            deckLoader.Rearrange(card, this);
+            deckLoader.Rearrange(item, this);
         }
     }
 
@@ -168,6 +160,7 @@ namespace IjaOrisha.Cards.Script.CardControl
     {
         Attack,
         Defence,
+        Spell,
         Deck
     }
 }

@@ -39,7 +39,7 @@ namespace IjaOrisha.Script.Input
             _activeDropZone = dropZone.GetComponent<DropZone>();
 
             if (_card)
-                _activeDropZone.OnHover(_card.gameObject);
+                _activeDropZone.OnHover(_card);
         }
 
         public void UnSetActiveDropZone()
@@ -63,7 +63,6 @@ namespace IjaOrisha.Script.Input
 
             if (_activeDropZone.CanDrop(_card))
             {
-                // _followItemParentDropZone.OnRemove();
                 _activeDropZone.OnDrop(_card);
                 _card = null;
                 _activeDzGob = null;
