@@ -1,4 +1,4 @@
-using IjaOrisha.Script.Network;
+using IjaOrisha.Player.Script;
 using TMPro;
 using UnityEngine;
 
@@ -6,16 +6,15 @@ namespace IjaOrisha.UI.Script.Lobby
 {
     public class WaitArea : MonoBehaviour
     {
-        [SerializeField] private RectTransform waitArea;
+        [SerializeField] private RectTransform lobby;
 
-        [SerializeField] private RectTransform playerOneRect;
         [SerializeField] private TextMeshProUGUI playerOneText;
 
         [SerializeField] private RectTransform playerTwoRect;
         [SerializeField] private TextMeshProUGUI playerTwoText;
 
-        [SerializeField] private TextMeshProUGUI vs;
         [SerializeField] private RectTransform battleButton;
+        [SerializeField] private TextMeshProUGUI battleText;
 
         private void OnEnable()
         {
@@ -32,7 +31,8 @@ namespace IjaOrisha.UI.Script.Lobby
             switch (playEvent)
             {
                 case PlayEvent.OnLobbyJoined:
-                    waitArea.gameObject.SetActive(true);
+                    lobby.gameObject.SetActive(true);
+                    playerOneText.text = PlayerManager.Instance.PlayerOneID;
                     break;
                 case PlayEvent.OnSessionPaired:
                     DisplayGamePlayers();
@@ -42,16 +42,10 @@ namespace IjaOrisha.UI.Script.Lobby
 
         private void DisplayGamePlayers()
         {
-            string sessionToken = SaveData.GetItemString("sessionToken");
-            SocMessage socResp = JsonUtility.FromJson<SocMessage>(sessionToken);
+            battleText.gameObject.SetActive(false);
 
-            playerOneRect.gameObject.SetActive(true);
-            playerOneText.text = socResp.playerOne;
-
-            vs.text = "vs";
-
+            playerTwoText.text = PlayerManager.Instance.PlayerTwoID;
             playerTwoRect.gameObject.SetActive(true);
-            playerTwoText.text = socResp.playerTwo;
 
             battleButton.gameObject.SetActive(true);
         }

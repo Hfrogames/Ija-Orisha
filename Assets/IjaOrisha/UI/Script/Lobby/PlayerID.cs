@@ -6,11 +6,15 @@ namespace IjaOrisha.UI.Script.Lobby
 {
     public class PlayerID : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI iDText;
+        [SerializeField] private TextMeshProUGUI playerOneID;
+        [SerializeField] private RectTransform playerTwoRect;
+        [SerializeField] private TextMeshProUGUI playerTwoID;
 
         private void OnEnable()
         {
             EventPub.OnPlayEvent += OnPlayEvent;
+
+            playerOneID.text = PlayerManager.Instance.PlayerOneID;
         }
 
         private void OnDisable()
@@ -22,8 +26,10 @@ namespace IjaOrisha.UI.Script.Lobby
         {
             switch (playEvent)
             {
-                case PlayEvent.OnLobbyConnected:
-                    iDText.text = PlayerManager.Instance.PlayerID;
+                case PlayEvent.OnSessionPaired:
+                    Debug.Log("display player data");
+                    playerTwoRect.gameObject.SetActive(true);
+                    playerTwoID.text = PlayerManager.Instance.PlayerTwoID;
                     break;
             }
         }

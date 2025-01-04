@@ -89,24 +89,24 @@ namespace IjaOrisha.Script.Network
         {
         }
     }
+}
 
-    [Serializable]
-    public class SocMessage
+[Serializable]
+public class SocMessage
+{
+    public string action;
+    public string roomID;
+    public string playerID;
+    public string playerOne;
+    public string playerTwo;
+    public BattleData playerOneBD;
+    public BattleData playerTwoBD;
+    public int roundTimeout;
+    public int currentRound;
+    public int totalRounds;
+
+    public string Get()
     {
-        public string action;
-        public string roomID;
-        public string playerID;
-        public string playerOne;
-        public string playerTwo;
-        public BattleData playerOneBD;
-        public BattleData playerTwoBD;
-        public int roundTimeout;
-        public int currentRound;
-        public int totalRounds;
-
-        public string Get()
-        {
-            return JsonUtility.ToJson(this);
-        }
+        return JsonUtility.ToJson(this);
     }
 }

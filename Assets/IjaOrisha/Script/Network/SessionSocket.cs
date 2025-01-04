@@ -73,7 +73,7 @@ namespace IjaOrisha.Script.Network
             JoinData = new SocMessage()
             {
                 action = "join",
-                playerID = PlayerManager.Instance.PlayerID,
+                playerID = PlayerManager.Instance.PlayerOneID,
                 roomID = joinData.roomID,
                 playerOne = joinData.playerOne,
                 playerTwo = joinData.playerTwo

@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//TODO: remove when done
 namespace IjaOrisha.Script.Network
 {
     public class ConnectionUI : MonoBehaviour

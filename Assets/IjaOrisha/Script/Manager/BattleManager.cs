@@ -68,12 +68,12 @@ namespace IjaOrisha.Player.Script
         {
             if (message.action == "formationStart")
             {
-                if (PlayerManager.Instance.PlayerID == _joinData.playerOne)
+                if (PlayerManager.Instance.PlayerOneID == _joinData.playerOne)
                 {
                     playerOneLoader.DisplayPlayerHealth(message.playerOneBD.PlayerHealth);
                     playerTwoLoader.DisplayPlayerHealth(message.playerTwoBD.PlayerHealth);
                 }
-                else if (PlayerManager.Instance.PlayerID == _joinData.playerTwo)
+                else if (PlayerManager.Instance.PlayerOneID == _joinData.playerTwo)
                 {
                     playerOneLoader.DisplayPlayerHealth(message.playerTwoBD.PlayerHealth);
                     playerTwoLoader.DisplayPlayerHealth(message.playerOneBD.PlayerHealth);
@@ -90,12 +90,12 @@ namespace IjaOrisha.Player.Script
 
             if (message.action == "battleData")
             {
-                if (PlayerManager.Instance.PlayerID == _joinData.playerOne)
+                if (PlayerManager.Instance.PlayerOneID == _joinData.playerOne)
                 {
                     _playerOneData = message.playerOneBD;
                     _playerTwoData = message.playerTwoBD;
                 }
-                else if (PlayerManager.Instance.PlayerID == _joinData.playerTwo)
+                else if (PlayerManager.Instance.PlayerOneID == _joinData.playerTwo)
                 {
                     _playerOneData = message.playerTwoBD;
                     _playerTwoData = message.playerOneBD;
@@ -145,7 +145,7 @@ namespace IjaOrisha.Player.Script
             SocMessage battleData = new SocMessage()
             {
                 action = "getBattleData",
-                playerID = PlayerManager.Instance.PlayerID,
+                playerID = PlayerManager.Instance.PlayerOneID,
                 roomID = _joinData.roomID,
                 playerOneBD = packPlayerData.Pack()
             };

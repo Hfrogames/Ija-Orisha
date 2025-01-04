@@ -29,7 +29,11 @@ namespace IjaOrisha.UI.Script.Lobby
                     break;
                 case PlayEvent.OnLobbyConnected:
                     lobbyText.text = "Connected to server";
-                    DOVirtual.DelayedCall(3f, () => loaderRect.gameObject.SetActive(false));
+                    DOVirtual.DelayedCall(3f, () =>
+                    {
+                        gameObject.SetActive(false);
+                        EventPub.Emit(PlayEvent.OnStart);
+                    });
                     break;
             }
         }

@@ -51,8 +51,9 @@ namespace IjaOrisha.Script.Network
                     EventPub.Emit(PlayEvent.OnLobbyJoined);
                     break;
                 case "sessionPaired":
+                    PlayerManager.Instance.SetPlayerTwoID(socMessage);
                     SaveData.SetItem("sessionToken", socMessage.Get());
-                    EventPub.Emit(PlayEvent.OnSessionPaired);
+                    EventPub.Emit(PlayEvent.OnSessionPaired, 2f);
                     break;
             }
         }
@@ -62,7 +63,7 @@ namespace IjaOrisha.Script.Network
             SocMessage joinData = new SocMessage()
             {
                 action = "join",
-                playerID = PlayerManager.Instance.PlayerID
+                playerID = PlayerManager.Instance.PlayerOneID
             };
             SendWebSocketMessage(joinData);
         }

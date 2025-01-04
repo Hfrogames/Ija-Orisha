@@ -8,7 +8,8 @@ namespace IjaOrisha.Player.Script
     {
         public static PlayerManager Instance { get; private set; }
 
-        public string PlayerID { get; private set; }
+        public string PlayerOneID { get; private set; }
+        public string PlayerTwoID { get; private set; }
 
         private void Awake()
         {
@@ -24,7 +25,7 @@ namespace IjaOrisha.Player.Script
 
         private void Start()
         {
-            PlayerID = GetPlayerID();
+            PlayerOneID = GetPlayerID();
         }
 
         private string GetPlayerID()
@@ -38,6 +39,14 @@ namespace IjaOrisha.Player.Script
             }
 
             return id;
+        }
+
+        public void SetPlayerTwoID(SocMessage socMessage)
+        {
+            if (socMessage.playerOne == PlayerOneID)
+                PlayerTwoID = socMessage.playerTwo;
+            else if (socMessage.playerTwo == PlayerOneID)
+                PlayerTwoID = socMessage.playerOne;
         }
     }
 }
