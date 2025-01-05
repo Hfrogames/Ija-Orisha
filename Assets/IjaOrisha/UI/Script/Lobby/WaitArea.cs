@@ -1,6 +1,7 @@
-using IjaOrisha.Player.Script;
+using IjaOrisha.Cards.Script;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace IjaOrisha.UI.Script.Lobby
 {
@@ -13,7 +14,8 @@ namespace IjaOrisha.UI.Script.Lobby
         [SerializeField] private RectTransform playerTwoRect;
         [SerializeField] private TextMeshProUGUI playerTwoText;
 
-        [SerializeField] private RectTransform battleButton;
+        [SerializeField] private Button battleButton;
+        [SerializeField] private TextMeshProUGUI battleButtonText;
         [SerializeField] private TextMeshProUGUI battleText;
 
         private void OnEnable()
@@ -33,6 +35,7 @@ namespace IjaOrisha.UI.Script.Lobby
                 case PlayEvent.OnLobbyJoined:
                     lobby.gameObject.SetActive(true);
                     playerOneText.text = PlayerManager.Instance.PlayerOneID;
+                    battleText.gameObject.SetActive(true);
                     break;
                 case PlayEvent.OnSessionPaired:
                     DisplayGamePlayers();
@@ -47,6 +50,8 @@ namespace IjaOrisha.UI.Script.Lobby
             playerTwoText.text = PlayerManager.Instance.PlayerTwoID;
             playerTwoRect.gameObject.SetActive(true);
 
+            battleButtonText.text = "Fight";
+            battleButton.enabled = true;
             battleButton.gameObject.SetActive(true);
         }
     }

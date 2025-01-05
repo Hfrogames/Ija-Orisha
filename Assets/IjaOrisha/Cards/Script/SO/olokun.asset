@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 842f61dae8974ed0b3d00df30b9e17e3, type: 3}
+  m_Name: olokun
+  m_EditorClassIdentifier: 
+  <CardID>k__BackingField: 0
+  <CardSprite>k__BackingField: {fileID: -637722443, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
+  <Orisha>k__BackingField: 9
+  <AttackValue>k__BackingField: 4
+  <DefenceValue>k__BackingField: 8
+  <spell>k__BackingField: 0
+  <spellValue>k__BackingField: 0

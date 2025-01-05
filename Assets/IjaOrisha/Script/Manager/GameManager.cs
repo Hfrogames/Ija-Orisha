@@ -1,8 +1,7 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace IjaOrisha.Player.Script
+namespace IjaOrisha.Cards.Script
 {
     public class GameManager : MonoBehaviour
     {

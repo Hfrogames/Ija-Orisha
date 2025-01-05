@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using IjaOrisha.Cards.Script.CardControl;
-using UnityEditor;
+using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -23,7 +22,7 @@ namespace IjaOrisha.Script.Input
         private bool _isDragging;
         private bool _isOnDropZone;
 
-        private InputController _inputController = new InputController();
+        private CardInputController _cardInputController = new CardInputController();
 
         private void OnHover(InputValue touchPos)
         {
@@ -37,7 +36,7 @@ namespace IjaOrisha.Script.Input
 
             FindHoverObject();
 
-            _inputController.FollowPosition(_touchPosition);
+            _cardInputController.FollowPosition(_touchPosition);
         }
 
         private void OnTouch()
@@ -50,16 +49,16 @@ namespace IjaOrisha.Script.Input
         {
             _isTouched = _isDragging = false;
             if (!_isOnDropZone)
-                _inputController.UnSetFollow();
+                _cardInputController.UnSetFollow();
 
             if (_isOnDropZone)
-                _inputController.SendToDropZone();
+                _cardInputController.SendToDropZone();
         }
 
         private void OnPositionReset()
         {
             _isOnDropZone = false;
-            _inputController.UnSetActiveDropZone();
+            _cardInputController.UnSetActiveDropZone();
         }
 
         private void FindHoverObject()
@@ -92,19 +91,19 @@ namespace IjaOrisha.Script.Input
             if (cachedDropZone.IsLocked) return;
 
             _isOnDropZone = true;
-            _inputController.SetActiveDropZone(hit);
+            _cardInputController.SetActiveDropZone(hit);
         }
 
         private void OnCard(GameObject hit)
         {
             if (!hit.CompareTag(cards.ToString()) || _isDragging) return;
 
-            var cachedDragItem = hit.GetComponent<Card>();
+            var cachedDragItem = hit.GetComponent<CardLoader>();
 
             if (cachedDragItem.isLocked) return;
 
             _isDragging = true;
-            _inputController.SetFollowItem(hit, gamePlayGraphicsRaycaster.transform);
+            _cardInputController.SetFollowItem(hit, gamePlayGraphicsRaycaster.transform);
         }
     }
 }

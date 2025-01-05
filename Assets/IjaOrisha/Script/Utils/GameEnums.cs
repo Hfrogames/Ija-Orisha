@@ -15,5 +15,11 @@ public enum Orisha
     Ṣàngó,
     Ògún,
     Ọṣun,
-    Yemọja
+    Yemọja,
+    ÈṣùỌ̀darà,
+    ÈṣùÀbítà,
+    Ọya,
+    Ọsanyin,
+    Ọbà,
+    Olokun
 }

@@ -15,8 +15,10 @@ public enum PlayEvent
     OnSessionJoined,
     OnSessionStart,
     OnSessionEnd,
+    OnBeforeFormationStart,
     OnRoundData, // Server event
     OnFormationStart,
+    OnFormationSubmit,
     OnFormationEnd,
     OnBattleData, // Server event
     OnBattleStart,
@@ -30,6 +32,7 @@ public class EventPub
 
     public static event PlayEvents OnPlayEvent;
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public static void Emit(PlayEvent playEvent, float delay = 0)
     {
         DOVirtual.DelayedCall(delay, () => OnPlayEvent?.Invoke(playEvent));

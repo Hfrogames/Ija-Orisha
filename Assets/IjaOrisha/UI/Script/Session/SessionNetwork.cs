@@ -24,14 +24,13 @@ namespace IjaOrisha.UI.Script.Session
             switch (playEvent)
             {
                 case PlayEvent.OnSessionConnected:
-                    statusText.text = "connected please wait...";
+                    Debug.Log("connected please wait");
                     break;
                 case PlayEvent.OnSessionJoined:
-                    statusText.text = "waiting for opponent...";
+                    Debug.Log("waiting for opponent...");
                     break;
                 case PlayEvent.OnSessionStart:
-                    statusText.text = "Battle Ready...";
-                    DOVirtual.DelayedCall(2, () => sessionPanel.SetActive(false));
+                    Debug.Log("Battle Ready...");
                     break;
             }
         }

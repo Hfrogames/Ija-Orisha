@@ -1,4 +1,5 @@
-using IjaOrisha.Player.Script;
+using IjaOrisha.Cards.Script;
+using IjaOrisha.Script.Battle;
 using UnityEngine;
 
 namespace IjaOrisha.Script.Network
@@ -47,23 +48,7 @@ namespace IjaOrisha.Script.Network
 
         protected override void OnMessage(SocMessage socMessage)
         {
-            string socResponse = socMessage.action;
-
-            switch (socResponse)
-            {
-                case "sessionJoined":
-                    EventPub.Emit(PlayEvent.OnSessionJoined);
-                    break;
-                case "sessionStart":
-                    EventPub.Emit(PlayEvent.OnSessionStart);
-                    break;
-                case "formationStart":
-                case "formationEnd":
-                case "battleData":
-                case "sessionEnd":
-                    EventPub.Emit(socMessage);
-                    break;
-            }
+            BattleMessage.OnSocketMessage(socMessage);
         }
 
         public void Join()

@@ -72,17 +72,17 @@ namespace IjaOrisha.Script.Network
 
         protected virtual void OnConnect()
         {
-            EventPub.Emit(PlayEvent.OnLobbyConnected);
+            // EventPub.Emit(PlayEvent.OnLobbyConnected);
         }
 
         protected virtual void OnDisconnect(string errorMessage)
         {
-            EventPub.Emit(PlayEvent.OnLobbyDisconnected);
+            // EventPub.Emit(PlayEvent.OnLobbyDisconnected);
         }
 
         protected virtual void OnDisconnect(WebSocketCloseCode errorMessage)
         {
-            EventPub.Emit(PlayEvent.OnLobbyDisconnected);
+            // EventPub.Emit(PlayEvent.OnLobbyDisconnected);
         }
 
         protected virtual void OnMessage(SocMessage socResponse)

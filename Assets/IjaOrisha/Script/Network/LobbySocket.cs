@@ -1,4 +1,5 @@
-using IjaOrisha.Player.Script;
+using IjaOrisha.Cards.Script;
+using UnityEngine;
 
 namespace IjaOrisha.Script.Network
 {
@@ -19,11 +20,6 @@ namespace IjaOrisha.Script.Network
             {
                 Instance = this;
             }
-        }
-
-        private void Start()
-        {
-            Connect();
         }
 
         public void Connect()

@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/IjaOrisha/Scenes/Lobby.unity
     guid: a056e035671f30548a9012402de8df39
   - enabled: 1

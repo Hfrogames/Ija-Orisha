@@ -12,6 +12,8 @@ namespace IjaOrisha.Script.LocalDB
 
         [SerializeField] private List<CardSO> cardSo;
 
+        public int Count => cardSo.Count;
+
         public CardSO GetCard(string cardName)
         {
             if (!IsCardSo || cardSo == null || string.IsNullOrEmpty(cardName))
@@ -40,7 +42,7 @@ namespace IjaOrisha.Script.LocalDB
             int randomIndex = UnityEngine.Random.Range(0, cardSo.Count);
             CardSO card = cardSo[randomIndex];
             cardSo.Remove(card);
-            
+
             return card;
         }
     }
