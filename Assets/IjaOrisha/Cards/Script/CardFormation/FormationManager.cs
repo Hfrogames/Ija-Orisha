@@ -51,7 +51,7 @@ namespace IjaOrisha.Cards.Script.CardFormation
         {
             playerOneFormation.SetActive(true);
             playerTwoFormation.SetActive(true);
-            deckLoader.Reveal();
+            // deckLoader.Reveal();
         }
 
         public void FormationEnd()

@@ -1,9 +1,10 @@
 using DG.Tweening;
+using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-namespace IjaOrisha.Cards.Script.CardFormation
+namespace IjaOrisha
 {
     public class CardLoader : MonoBehaviour
     {
@@ -86,6 +87,14 @@ namespace IjaOrisha.Cards.Script.CardFormation
                     cardRect.anchorMax = new Vector2(0.5f, 0.5f);
                     cardRect.anchoredPosition = Vector3.zero;
                 });
+        }
+
+        public void HidePoint(bool hideDefence)
+        {
+            if (hideDefence)
+                defenceRect.gameObject.SetActive(false);
+            else
+                attackRect.gameObject.SetActive(false);
         }
     }
 }

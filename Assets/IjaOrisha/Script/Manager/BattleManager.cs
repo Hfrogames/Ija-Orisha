@@ -1,14 +1,16 @@
+using IjaOrisha.Cards.Script;
 using IjaOrisha.Cards.Script.CardFormation;
+using IjaOrisha.Script.Battle;
 using IjaOrisha.Script.Network;
 using UnityEngine;
 
-namespace IjaOrisha.Cards.Script
+namespace IjaOrisha
 {
     public class BattleManager : MonoBehaviour
     {
-        [SerializeField] private FormationManager formationManager;
         [SerializeField] private SessionSocket sessionSocket;
-
+        [SerializeField] private FormationManager formationManager;
+        [SerializeField] private SimulationManager simulationManager;
 
         private SocMessage _battleData;
 
@@ -22,6 +24,11 @@ namespace IjaOrisha.Cards.Script
             EventPub.OnPlayEvent -= OnPlayEvent;
         }
 
+        private void Start() //TODO: Demo only
+        {
+            BattlePlayer.SetBattleData(new SocMessage());
+        }
+
         private void OnPlayEvent(PlayEvent playEvent)
         {
             switch (playEvent)
@@ -31,8 +38,8 @@ namespace IjaOrisha.Cards.Script
                     _battleData = JsonUtility.FromJson<SocMessage>(joinDataString);
                     break;
                 case PlayEvent.OnFormationStart:
-                    Debug.Log("formation start");
                     formationManager.FormationStart();
+                    simulationManager.SimulationEnd();
                     break;
                 case PlayEvent.OnFormationEnd:
                     SocMessage battleData = new SocMessage()
@@ -44,10 +51,13 @@ namespace IjaOrisha.Cards.Script
                     };
 
                     sessionSocket.SendWebSocketMessage(battleData);
-                    Debug.Log(JsonUtility.ToJson(formationManager.Pack()));
                     break;
                 case PlayEvent.OnBattleData:
                     formationManager.FormationEnd();
+                    simulationManager.LoadSimulationData();
+                    break;
+                case PlayEvent.OnBattleStart:
+                    simulationManager.SimulationStart();
                     break;
             }
         }

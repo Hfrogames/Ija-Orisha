@@ -276,7 +276,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -364,7 +364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2512555900786792416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -673,7 +673,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a5e01fdd639ec06ad93ccef1841c69be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f76583fefd472d8b0a0a6f2582f645cb, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.55
+  m_fontSize: 53.7
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -987,9 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7c93ffdc7c4b24b7819995b18b3096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 0
-  isRevealed: 0
-  cachedDropZone: {fileID: 0}
   orishaImg: {fileID: 2240592967545848700}
   cardRect: {fileID: 7426556852837254214}
   attackRect: {fileID: 8160247934609629739}
@@ -998,3 +995,4 @@ MonoBehaviour:
   defenceText: {fileID: 5647876625996304595}
   spellRect: {fileID: 6783112298641502481}
   spellText: {fileID: 4770851865127946875}
+  isLocked: 0

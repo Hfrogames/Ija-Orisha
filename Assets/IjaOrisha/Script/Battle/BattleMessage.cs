@@ -22,6 +22,7 @@ namespace IjaOrisha.Script.Battle
                         EventPub.Emit(PlayEvent.OnFormationEnd);
                     break;
                 case "battleData":
+                    BattlePlayer.SetBattleData(message);
                     EventPub.Emit(PlayEvent.OnBattleData);
                     break;
             }
