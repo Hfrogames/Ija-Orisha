@@ -1,7 +1,3 @@
-using IjaOrisha.Cards.Script;
-using IjaOrisha.Cards.Script.CardFormation;
-using IjaOrisha.Script.Battle;
-using IjaOrisha.Script.Network;
 using UnityEngine;
 
 namespace IjaOrisha
@@ -24,9 +20,9 @@ namespace IjaOrisha
             EventPub.OnPlayEvent -= OnPlayEvent;
         }
 
-        private void Start() //TODO: Demo only
+        private void Start()
         {
-            BattlePlayer.SetBattleData(new SocMessage());
+            BattlePlayer.LoadDummy();
         }
 
         private void OnPlayEvent(PlayEvent playEvent)
@@ -45,7 +41,7 @@ namespace IjaOrisha
                     SocMessage battleData = new SocMessage()
                     {
                         action = "getBattleData",
-                        playerID = PlayerManager.Instance.PlayerOneID,
+                        playerID = PlayerManager.Instance.PlayerID,
                         roomID = _battleData.roomID,
                         playerOneBD = formationManager.Pack()
                     };
@@ -56,8 +52,9 @@ namespace IjaOrisha
                     formationManager.FormationEnd();
                     simulationManager.LoadSimulationData();
                     break;
-                case PlayEvent.OnBattleStart:
-                    simulationManager.SimulationStart();
+                case PlayEvent.OnSimulationStart:
+                    simulationManager
+                        .SimulationStart();
                     break;
             }
         }

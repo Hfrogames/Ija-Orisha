@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using VInspector;
 
-namespace IjaOrisha.Cards.Script.CardFormation
+namespace IjaOrisha
 {
     public class DropZone : MonoBehaviour
     {

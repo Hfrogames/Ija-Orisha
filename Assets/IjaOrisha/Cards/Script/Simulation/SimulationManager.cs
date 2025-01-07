@@ -1,6 +1,4 @@
 using DG.Tweening;
-using IjaOrisha.Script.Battle;
-using IjaOrisha.Script.LocalDB;
 using UnityEngine;
 
 namespace IjaOrisha
@@ -14,6 +12,8 @@ namespace IjaOrisha
 
     public class SimulationManager : MonoBehaviour
     {
+        [SerializeField] private HealthHud healthHud;
+
         [SerializeField] private BattleSlotController bSlotControllerPl2;
         [SerializeField] private BattleHero bHeroPl2;
         [SerializeField] private BattleSlotController bSlotControllerPl1;
@@ -39,26 +39,28 @@ namespace IjaOrisha
             bHeroPl1.Load(_bSimPl1, bHeroPl2);
             bHeroPl2.Load(_bSimPl2, bHeroPl1);
 
-            EventPub.Emit(PlayEvent.OnBattleStart);
+            EventPub.Emit(PlayEvent.OnSimulationStart);
         }
 
         public void SimulationStart()
         {
-            Sequence seq = DOTween.Sequence();
-            Simulate(
+            var seq = Simulate(
                 PlayerID.Player1,
                 bSlotControllerPl1,
                 bSlotControllerPl2,
                 bHeroPl1,
                 bHeroPl2
-            ).OnComplete(() =>
-                Simulate(
-                    PlayerID.Player2,
-                    bSlotControllerPl2,
-                    bSlotControllerPl1,
-                    bHeroPl2,
-                    bHeroPl1
-                ));
+            ).Append(Simulate(
+                PlayerID.Player2,
+                bSlotControllerPl2,
+                bSlotControllerPl1,
+                bHeroPl2,
+                bHeroPl1
+            ));
+
+            // Get the total duration
+            // float totalDuration = seq.Duration();
+            // Debug.Log("Total Sequence Duration: " + totalDuration + " seconds");
         }
 
         private Sequence Simulate(
@@ -85,7 +87,8 @@ namespace IjaOrisha
                 .Append(locBHeroPl1.ApplyAttackSpell())
 
                 // hide looser
-                .AppendCallback(() => HideLooser(seq, playerID));
+                .Append(HideLooser(playerID))
+                .Append(healthHud.UpdateHealth(playerID));
             return seq;
         }
 
@@ -95,9 +98,9 @@ namespace IjaOrisha
             bSlotControllerPl1.gameObject.SetActive(false);
         }
 
-        private void HideLooser(Sequence seq, PlayerID playerID)
+        private Sequence HideLooser(PlayerID playerID)
         {
-            seq.AppendInterval(1f);
+            Sequence seq = DOTween.Sequence();
 
             int attackPoint = 0;
             int defensePoint = 0;
@@ -127,21 +130,23 @@ namespace IjaOrisha
 
             if (attackPoint > defensePoint)
             {
-                seq.Append(bSlotDefence.HideDefenceSlot())
+                seq.Append(bSlotDefence.HideSlot(SlotID.DefenseCard))
                     .Append(defenceHero.Failed());
             }
             else if (attackPoint < defensePoint)
             {
-                seq.Append(bSlotAttack.HideAttackSlot())
+                seq.Append(bSlotAttack.HideSlot(SlotID.AttackCard))
                     .Append(offenceHero.Failed());
             }
             else
             {
-                seq.Append(bSlotAttack.HideAttackSlot())
-                    .Append(bSlotDefence.HideDefenceSlot())
+                seq.Append(bSlotAttack.HideSlot(SlotID.AttackCard))
+                    .Append(bSlotDefence.HideSlot(SlotID.DefenseCard))
                     .Append(offenceHero.Failed())
                     .Append(defenceHero.Failed());
             }
+
+            return seq;
         }
 
         private BattleSimulationData GetBattleData(BattleData battleData)

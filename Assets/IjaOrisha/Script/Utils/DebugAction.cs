@@ -1,12 +1,9 @@
 using System;
-using IjaOrisha.Script.LocalDB;
-using IjaOrisha.Script.Network;
 using UnityEngine;
 
 
 public class DebugAction : MonoBehaviour
 {
-    [SerializeField] private LocalDB loca;
 
     public void Check()
     {
@@ -15,6 +12,5 @@ public class DebugAction : MonoBehaviour
 
         // SocMessage socMessage = JsonUtility.FromJson<SocMessage>(socResp);
 
-        Debug.Log(loca.Count);
     }
 }

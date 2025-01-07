@@ -1,11 +1,9 @@
 using DG.Tweening;
-using IjaOrisha.Cards.Script;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace IjaOrisha.UI.Script.Session
+namespace IjaOrisha
 {
     public class BattleBottomNav : MonoBehaviour
     {
@@ -40,10 +38,10 @@ namespace IjaOrisha.UI.Script.Session
                     button.enabled = false;
                     battleInfo.text = "Processing";
                     break;
-                case PlayEvent.OnBattleStart:
+                case PlayEvent.OnSimulationStart:
                     battleInfo.text = "Loading";
                     break;
-                case PlayEvent.OnBattleWin:
+                case PlayEvent.OnSimulationEnd:
                     // battleInfo.text = "Battle";
                     break;
                 case PlayEvent.OnSessionEnd:

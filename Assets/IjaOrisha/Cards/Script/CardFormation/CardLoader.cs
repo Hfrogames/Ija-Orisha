@@ -1,5 +1,4 @@
 using DG.Tweening;
-using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;

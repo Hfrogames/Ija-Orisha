@@ -1,7 +1,6 @@
-using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
 
-namespace IjaOrisha.Script.Input
+namespace IjaOrisha
 {
     public class CardInputController
     {

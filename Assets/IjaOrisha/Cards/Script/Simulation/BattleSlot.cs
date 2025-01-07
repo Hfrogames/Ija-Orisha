@@ -1,5 +1,4 @@
 using DG.Tweening;
-using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
 
 namespace IjaOrisha
@@ -12,6 +11,9 @@ namespace IjaOrisha
 
         public void LoadCard(CardSO cardSo, bool hideDefence)
         {
+            flip.ResetPose();
+            transform.localScale = Vector3.one * .8f;
+
             if (!cardSo)
             {
                 isCardSo = false;

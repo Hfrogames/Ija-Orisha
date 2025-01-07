@@ -1,4 +1,4 @@
-namespace IjaOrisha.Script.Battle
+namespace IjaOrisha
 {
     public class BattleMessage
     {

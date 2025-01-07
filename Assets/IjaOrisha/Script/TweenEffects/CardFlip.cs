@@ -15,7 +15,7 @@ public class CardFlip : MonoBehaviour
         ResetPose();
     }
 
-    private void ResetPose()
+    public void ResetPose()
     {
         card.gameObject.SetActive(false);
         emptyFront.gameObject.SetActive(false);

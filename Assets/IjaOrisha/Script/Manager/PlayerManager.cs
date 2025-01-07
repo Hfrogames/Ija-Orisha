@@ -2,14 +2,13 @@ using System;
 using IjaOrisha.Script.Utils;
 using UnityEngine;
 
-namespace IjaOrisha.Cards.Script
+namespace IjaOrisha
 {
     public class PlayerManager : MonoBehaviour
     {
         public static PlayerManager Instance { get; private set; }
 
-        public string PlayerOneID { get; private set; }
-        public string PlayerTwoID { get; private set; }
+        public string PlayerID { get; private set; }
 
         private void Awake()
         {
@@ -25,7 +24,7 @@ namespace IjaOrisha.Cards.Script
 
         private void Start()
         {
-            PlayerOneID = GetPlayerID();
+            PlayerID = GetPlayerID();
         }
 
         private string GetPlayerID()
@@ -40,13 +39,6 @@ namespace IjaOrisha.Cards.Script
 
             return id;
         }
-
-        public void SetPlayerTwoID(SocMessage socMessage)
-        {
-            if (socMessage.playerOne == PlayerOneID)
-                PlayerTwoID = socMessage.playerTwo;
-            else if (socMessage.playerTwo == PlayerOneID)
-                PlayerTwoID = socMessage.playerOne;
-        }
+  
     }
 }

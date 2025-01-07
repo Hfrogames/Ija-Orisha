@@ -1,5 +1,4 @@
 using DG.Tweening;
-using IjaOrisha.Script.Network;
 using UnityEngine;
 
 
@@ -14,15 +13,17 @@ public enum PlayEvent
     OnSessionDisconnected,
     OnSessionJoined,
     OnSessionStart,
-    OnSessionEnd,
-    OnBeforeFormationStart,
+    OnSessionEnd, // session is over
+    OnSessionWin, // player won the session
+    OnSessionLose, // player lost the session
+    OnSessionDraw, // both player draw
     OnRoundData, // Server event
     OnFormationStart,
     OnFormationSubmit,
     OnFormationEnd,
     OnBattleData, // Server event
-    OnBattleStart,
-    OnBattleWin
+    OnSimulationStart,
+    OnSimulationEnd
 }
 
 

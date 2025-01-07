@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using IjaOrisha.Script.LocalDB;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace IjaOrisha.Cards.Script.CardFormation
+
+namespace IjaOrisha
 {
     public class DeckLoader : MonoBehaviour
     {

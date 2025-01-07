@@ -1,7 +1,5 @@
-using IjaOrisha.Cards.Script;
-using UnityEngine;
 
-namespace IjaOrisha.Script.Network
+namespace IjaOrisha
 {
     public class LobbySocket : GameSocket
     {
@@ -47,7 +45,7 @@ namespace IjaOrisha.Script.Network
                     EventPub.Emit(PlayEvent.OnLobbyJoined);
                     break;
                 case "sessionPaired":
-                    PlayerManager.Instance.SetPlayerTwoID(socMessage);
+                    BattlePlayer.SetPlayer(socMessage);
                     SaveData.SetItem("sessionToken", socMessage.Get());
                     EventPub.Emit(PlayEvent.OnSessionPaired, 2f);
                     break;
@@ -59,7 +57,7 @@ namespace IjaOrisha.Script.Network
             SocMessage joinData = new SocMessage()
             {
                 action = "join",
-                playerID = PlayerManager.Instance.PlayerOneID
+                playerID = PlayerManager.Instance.PlayerID
             };
             SendWebSocketMessage(joinData);
         }

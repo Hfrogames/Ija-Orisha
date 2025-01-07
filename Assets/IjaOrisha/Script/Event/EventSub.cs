@@ -15,10 +15,10 @@ public class EventSub
             case PlayEvent.OnFormationEnd:
                 InFormation = false;
                 break;
-            case PlayEvent.OnBattleStart:
+            case PlayEvent.OnSimulationStart:
                 InBattle = true;
                 break;
-            case PlayEvent.OnBattleWin:
+            case PlayEvent.OnSimulationEnd:
                 InBattle = false;
                 break;
             case PlayEvent.OnLobbyConnected:

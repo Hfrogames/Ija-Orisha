@@ -21,6 +21,7 @@ namespace IjaOrisha
         {
             _bSim = bSim;
             _enemyHero = enemyHero;
+            ResetPose();
         }
 
         public Sequence Attack()
@@ -35,7 +36,7 @@ namespace IjaOrisha
             return attackSq;
         }
 
-        public Sequence Defend()
+        private Sequence Defend()
         {
             // defend attack
             Sequence defenseSq = DOTween.Sequence();
@@ -45,7 +46,6 @@ namespace IjaOrisha
                 .AppendCallback(() => UpdateDefencePoint(_bSim.DefenseCardSo.DefenceValue));
             return defenseSq;
         }
-
 
         public Sequence ApplyAttackSpell()
         {
@@ -66,18 +66,6 @@ namespace IjaOrisha
             return spellSq;
         }
 
-        private Sequence Succeed()
-        {
-            if (_bSim.BattleData.AttackPoint < _enemyHero._bSim.BattleData.DefensePoint) return null;
-
-            // attack succeed
-            Sequence succeedSq = DOTween.Sequence();
-            succeedSq
-                .AppendCallback(() => _enemyHero.DestroyShield())
-                .AppendInterval(1f);
-            return succeedSq;
-        }
-
         public Sequence Failed()
         {
             // attack failed
@@ -85,7 +73,8 @@ namespace IjaOrisha
             failedSq
                 .AppendCallback(DestroyShield)
                 .AppendCallback(DestroyWeapon)
-                .AppendInterval(1f);
+                .AppendInterval(1f)
+                .AppendCallback(ResetPose);
             return failedSq;
         }
 
@@ -99,7 +88,7 @@ namespace IjaOrisha
             defendHeroShield.gameObject.SetActive(false);
         }
 
-        private void AttackComplete()
+        private void ResetPose()
         {
             attackHeroWeapon.gameObject.SetActive(false);
             defendHeroShield.gameObject.SetActive(false);

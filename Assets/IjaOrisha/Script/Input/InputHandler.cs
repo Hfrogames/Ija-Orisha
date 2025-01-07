@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 
-namespace IjaOrisha.Script.Input
+namespace IjaOrisha
 {
     public class InputHandler : MonoBehaviour
     {

@@ -1,9 +1,7 @@
 using System;
-using IjaOrisha.Cards.Script.CardFormation;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace IjaOrisha.Cards.Script.CardFormation
+namespace IjaOrisha
 {
     public class FormationManager : MonoBehaviour
     {
@@ -51,7 +49,7 @@ namespace IjaOrisha.Cards.Script.CardFormation
         {
             playerOneFormation.SetActive(true);
             playerTwoFormation.SetActive(true);
-            // deckLoader.Reveal();
+            deckLoader.Reveal();
         }
 
         public void FormationEnd()

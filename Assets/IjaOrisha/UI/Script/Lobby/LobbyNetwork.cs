@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace IjaOrisha.UI.Script.Lobby
+namespace IjaOrisha
 {
     public class LobbyNetwork : MonoBehaviour
     {

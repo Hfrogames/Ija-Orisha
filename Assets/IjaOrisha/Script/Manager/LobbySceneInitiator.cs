@@ -1,8 +1,7 @@
 using DG.Tweening;
-using IjaOrisha.Script.Network;
 using UnityEngine;
 
-namespace IjaOrisha.Cards.Script
+namespace IjaOrisha
 {
     public class LobbySceneInitiator : MonoBehaviour
     {

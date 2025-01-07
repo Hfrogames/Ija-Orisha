@@ -1,9 +1,8 @@
-using IjaOrisha.Cards.Script;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IjaOrisha.UI.Script.Lobby
+namespace IjaOrisha
 {
     public class WaitArea : MonoBehaviour
     {
@@ -34,7 +33,7 @@ namespace IjaOrisha.UI.Script.Lobby
             {
                 case PlayEvent.OnLobbyJoined:
                     lobby.gameObject.SetActive(true);
-                    playerOneText.text = PlayerManager.Instance.PlayerOneID;
+                    playerOneText.text = PlayerManager.Instance.PlayerID;
                     battleText.gameObject.SetActive(true);
                     break;
                 case PlayEvent.OnSessionPaired:
@@ -47,7 +46,7 @@ namespace IjaOrisha.UI.Script.Lobby
         {
             battleText.gameObject.SetActive(false);
 
-            playerTwoText.text = PlayerManager.Instance.PlayerTwoID;
+            playerTwoText.text = BattlePlayer.PlayerTwoID;
             playerTwoRect.gameObject.SetActive(true);
 
             battleButtonText.text = "Fight";

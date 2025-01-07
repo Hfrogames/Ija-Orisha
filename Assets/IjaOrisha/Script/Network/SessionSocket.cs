@@ -1,8 +1,6 @@
-using IjaOrisha.Cards.Script;
-using IjaOrisha.Script.Battle;
 using UnityEngine;
 
-namespace IjaOrisha.Script.Network
+namespace IjaOrisha
 {
     public class SessionSocket : GameSocket
     {
@@ -58,7 +56,7 @@ namespace IjaOrisha.Script.Network
             JoinData = new SocMessage()
             {
                 action = "join",
-                playerID = PlayerManager.Instance.PlayerOneID,
+                playerID = PlayerManager.Instance.PlayerID,
                 roomID = joinData.roomID,
                 playerOne = joinData.playerOne,
                 playerTwo = joinData.playerTwo

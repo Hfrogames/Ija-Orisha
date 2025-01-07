@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IjaOrisha.Script.LocalDB
+namespace IjaOrisha
 {
     public class LocalDBManager : MonoBehaviour
     {

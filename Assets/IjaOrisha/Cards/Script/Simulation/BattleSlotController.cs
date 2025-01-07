@@ -58,29 +58,26 @@ namespace IjaOrisha
             return _displaySq;
         }
 
-
-        public Sequence HideAttackSlot()
+        public Sequence HideSlot(SlotID slotID)
         {
             _displaySq = DOTween.Sequence();
 
-            _displaySq
-                .Join(attackCard.HideCard())
-                .AppendInterval(0.5f)
-                .Join(attackSpell.HideCard());
+            switch (slotID)
+            {
+                case SlotID.AttackCard:
+                    _displaySq.Join(attackCard.HideCard())
+                        .AppendInterval(0.5f)
+                        .Join(attackSpell.HideCard());
+                    break;
+                case SlotID.DefenseCard:
+                    _displaySq.Join(defenseCard.HideCard())
+                        .AppendInterval(0.5f)
+                        .Join(defenseSpell.HideCard());
+                    break;
+            }
 
             return _displaySq;
         }
-
-        public Sequence HideDefenceSlot()
-        {
-            _displaySq = DOTween.Sequence();
-
-            _displaySq
-                .Join(defenseSpell.HideCard())
-                .AppendInterval(0.5f)
-                .Join(defenseCard.HideCard());
-
-            return _displaySq;
-        }
+   
     }
 }

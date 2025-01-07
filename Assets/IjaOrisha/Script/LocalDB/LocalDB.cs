@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IjaOrisha.Script.LocalDB
+namespace IjaOrisha
 {
     public class LocalDB : MonoBehaviour
     {

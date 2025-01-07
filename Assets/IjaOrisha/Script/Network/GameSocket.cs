@@ -2,7 +2,7 @@ using System;
 using NativeWebSocket;
 using UnityEngine;
 
-namespace IjaOrisha.Script.Network
+namespace IjaOrisha
 {
     public class GameSocket : MonoBehaviour
     {
