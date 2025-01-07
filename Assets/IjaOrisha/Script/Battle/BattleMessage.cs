@@ -25,6 +25,11 @@ namespace IjaOrisha
                     BattlePlayer.SetBattleData(message);
                     EventPub.Emit(PlayEvent.OnBattleData);
                     break;
+                case "sessionEnd":
+                    BattlePlayer.SetBattleData(message);
+                    BattlePlayer.FindWinner();
+                    EventPub.Emit(PlayEvent.OnSessionEnd);
+                    break;
             }
         }
     }

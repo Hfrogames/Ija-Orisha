@@ -1,22 +1,49 @@
-# Ija Orisha 
+# Ija Orisha: Battle of the Gods
 
 ## Idea
 
-Ija Orisha (battle of the gods) originated from the mechinic of our dance game DancePal. we were working on a dance game for aws challenge but switched to a card game. We wantend a way to tell the world about some african deaitys.
+*Ija Orisha* (translated as *Battle of the Gods*) began as an evolution of our dance game, *DancePal*, originally conceived for an AWS challenge. During development, we pivoted to a card-based game with one central goal: to showcase the vibrant mythology of African deities to a global audience.
 
 ## Story
 
-There was once and old ancient kingdom called Ilu Ori in a remote regions of west afican. This kingdom was ruled by a powerful and the kingdom was prosperous they king Oba Oladori had so many wifes and many children. He even lost count of how many children he have. He ruled over ilu ori for 100 years and everything was good until he died of an unknown illness.
-The king makers were tasked with appointing a new king but because oba Oladori had so many sons and duagthers all claiming they have equal right to the throne the king makers had no choice and to invite the children to dueal and only rhe strongest of them all can be king. All the children or Oladori have access to the gods of there father they could summon any gods at well as long as they have the cards. With this the dual begins and here I introlduce to you Ija Orisha. battle of the gods
+In the ancient and prosperous kingdom of **Ilu Ori**, nestled in the remote regions of West Africa, life was bountiful under the reign of the mighty King **Oba Oladori**. Known for his wisdom, strength, and countless wives, Oba Oladori fathered so many children that even he lost count. For 100 years, Ilu Ori flourished under his rule, but everything changed when the king succumbed to a mysterious illness.  
 
-## Challenges
+With Oba Oladori gone, the kingdom plunged into chaos. The kingmakers, tasked with selecting the next ruler, faced an impossible dilemma every son and daughter of Oladori claimed equal right to the throne. Unable to resolve the conflict through deliberation, they devised a dramatic solution: **a duel to determine the strongest heir**.
 
-We want a server that could handle players session and less cumbersome to setup and less expensive too. Our game programmer Ayo had to take some aws course during the perioud of the hackathon and suggest we amazon ready made solution aws game lift. but we discorverd it might be an overkill even when it provide so much ease of life feature like lobby and session. we had no experince with any aws tools and don't know ec2 same time we using aws is essential to our product. so we built a simple socket server using node.js and deployed this on aws eleastic bean stack. Though it took some getting used to and the fact we can't see a live logs or the running application is a little streessful but luckity for us our code works same way it does locally. this alone is a huge advantage. since what we get locally is what we get on server. we are focused on release an mvp to meet up with the submission and won't include some othere aws tools we need. this is where we might fake it till we make it.
-eg for player ID we will use aws coginto but for now we assign random ID to users. for score and leaderboard we are hoping to use aws no-sql database. and finally we laucnh we might give aws game lift a go. I feel a basic knowlegee about a tools is important before building with it.
+Each child of Oladori inherited the ability to summon the gods of their father using sacred cards imbued with divine power. Armed with these cards, the children must now battle each other in an epic contest of strength and strategy. Only the victor, the one who proves themselves worthy in combat, will ascend to the throne.  
 
-## Amazon Q
+This is where the story of *Ija Orisha* begins—a thrilling battle of gods, wits, and wills.  
 
-First I would say thanks for aws for providing Amazon Q it feel native and seems it designed speicifically for game devs it knows my mind and it able to predict what I want to do but can't figure out. it precise and straignt forward when giving anaswer to question. Though during the first weeks got some errors but but now the tools has been greatly improved and it blends seemlessly with rider this combo is what I can't do without now. I would say without amazon q the development time would take longer. We are able to protype and test out codeblock without commiting to then just to see they would work out.
+## Challenges  
 
-## About Us
-We are Hfrogames an indie stuido of passionate  self thought induvials from Lagos Nigeria. We have Ayo the cto and the jack of all trade from cloud to backend to game programming, We have Saheed the graphics generalist responsible for mamaging our game art. Finally we have mosope the project manager and story director responsible for creating the stroy and also responsible for the marketing and monetisations also keep the team in cheak making sure we meet the deadline
+Developing *Ija Orisha* came with unique technical and resource challenges, especially as we transitioned to AWS for the hackathon:  
+
+1. **Server Infrastructure**  
+   We needed a server to handle player sessions that was cost-effective and easy to manage. Initially, our game programmer, Ayo, explored AWS GameLift due to its robust features like lobby management and matchmaking. However, we found it too complex for our current needs.  
+
+2. **Custom Solution**  
+   With no prior AWS experience, we decided to create a lightweight server using Node.js and deploy it via AWS Elastic Beanstalk. Although setting it up and troubleshooting without live logs was stressful, the deployment mirrored local behavior perfectly, giving us confidence in our approach.  
+
+3. **Workarounds for AWS Tools**  
+   To meet our MVP deadline, we made compromises:
+   - **Player IDs**: We plan to integrate AWS Cognito but currently assign random IDs.
+   - **Leaderboard & Scores**: AWS NoSQL databases are our goal, but for now, we're using temporary local storage.  
+   - **GameLift**: Once we launch, we aim to revisit GameLift to refine player sessions.  
+
+Our motto during this phase was simple: "Fake it till we make it."  
+
+## Amazon Q  
+
+A massive thanks to AWS for introducing **Amazon Q**, a tool that feels tailor-made for game developers. It seamlessly integrates with Rider, helping us predict and solve development problems with precision. Early errors aside, the tool's improvements saved us countless hours by allowing us to test code blocks without committing, enabling rapid prototyping.  
+
+Without Amazon Q, our development timeline would have significantly stretched. It's now an essential part of our workflow.  
+
+## About Us  
+
+We are **HFrogames**, an indie studio from Lagos, Nigeria, driven by passion and self-taught expertise. Our team:  
+
+- **Ayo**: CTO and jack-of-all-trades, handling everything from cloud infrastructure to game programming.  
+- **Saheed**: Graphics generalist, responsible for creating and managing stunning game art.  
+- **Mosope**: Project manager and story director, crafting compelling narratives while managing marketing, monetization, and deadlines.  
+
+Together, we are determined to bring African stories to the forefront of the gaming world. *Ija Orisha* is just the beginning.  

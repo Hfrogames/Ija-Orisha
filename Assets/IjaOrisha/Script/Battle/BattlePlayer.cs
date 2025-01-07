@@ -11,8 +11,8 @@ namespace IjaOrisha
         public static void LoadDummy() //TODO: Demo only
         {
             // TODO: demo only
-            PlayerOneID = "vwZEue";
-            SetBattleData(_demoMes);
+            // PlayerOneID = "vwZEue";
+            // SetBattleData(_demoMes);
         }
 
         public static void SetPlayer(SocMessage messsage)
@@ -36,6 +36,22 @@ namespace IjaOrisha
             {
                 PlayerOneBd = messsage.playerTwoBD;
                 PlayerTwoBd = messsage.playerOneBD;
+            }
+        }
+
+        public static void FindWinner()
+        {
+            if (PlayerOneBd.PlayerHealth > PlayerTwoBd.PlayerHealth)
+            {
+                EventPub.Emit(PlayEvent.OnSessionWin);
+            }
+            else if (PlayerOneBd.PlayerHealth < PlayerTwoBd.PlayerHealth)
+            {
+                EventPub.Emit(PlayEvent.OnSessionLose);
+            }
+            else
+            {
+                EventPub.Emit(PlayEvent.OnSessionDraw);
             }
         }
 
