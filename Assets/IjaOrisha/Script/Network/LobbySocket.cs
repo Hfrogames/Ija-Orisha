@@ -6,7 +6,7 @@ namespace IjaOrisha
         public static LobbySocket Instance { get; private set; }
 
         // private string _socketURL = "ws://localhost:3000/lobby";
-        private string _socketURL = "http://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/lobby";
+        private string _socketURL = "ws://match-it-env.eba-hf3mwhfn.eu-north-1.elasticbeanstalk.com/lobby";
 
         private void Awake()
         {
