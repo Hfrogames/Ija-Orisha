@@ -45,6 +45,11 @@ public class CardFlip : MonoBehaviour
         return flipSequence;
     }
 
+    public Tween KnockOut(float direction)
+    {
+        return emptyFront.transform.DOLocalMoveX(direction, .2f).SetEase(Ease.OutSine);
+    }
+
     public void Play(bool isEmpty)
     {
         Flip(.1f, isEmpty);

@@ -11,8 +11,8 @@ namespace IjaOrisha
         public static void LoadDummy() //TODO: Demo only
         {
             // TODO: demo only
-            // PlayerOneID = "vwZEue";
-            // SetBattleData(_demoMes);
+            PlayerOneID = "vwZEue";
+            SetBattleData(_demoMes);
         }
 
         public static void SetPlayer(SocMessage messsage)
@@ -62,12 +62,12 @@ namespace IjaOrisha
             playerOne = "vwZEue",
             playerOneBD = new BattleData()
             {
-                AttackCard = "ogun",
-                DefenseCard = "yemoja",
-                AttackSpell = "doubleByTwo",
+                AttackCard = "sango",
+                DefenseCard = "osun",
+                AttackSpell = "divideByTwo",
                 DefenseSpell = "None",
-                AttackPoint = 8,
-                DefensePoint = 10,
+                AttackPoint = 20,
+                DefensePoint = 4,
                 PlayerHealth = 10,
             },
             playerTwo = "RnYL7w",
@@ -75,10 +75,10 @@ namespace IjaOrisha
             {
                 AttackCard = "ogun",
                 DefenseCard = "yemoja",
-                AttackSpell = "None",
-                DefenseSpell = "divideByTwo",
+                AttackSpell = "divideByTwo",
+                DefenseSpell = "doubleByTwo",
                 AttackPoint = 8,
-                DefensePoint = 10,
+                DefensePoint = 20,
                 PlayerHealth = 15,
             },
             roundTimeout = 20,

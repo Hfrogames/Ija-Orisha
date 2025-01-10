@@ -142,8 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b30504cde254bf49eaa40e9733084ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardLoader: {fileID: 5142959624109344020}
   flip: {fileID: 3466614983376776907}
+  cardLoader: {fileID: 5142959624109344020}
   isCardSo: 0
 --- !u!1 &8927611268685329614
 GameObject:

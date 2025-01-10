@@ -15,9 +15,7 @@ namespace IjaOrisha
         [SerializeField] private HealthHud healthHud;
 
         [SerializeField] private BattleSlotController bSlotControllerPl2;
-        [SerializeField] private BattleHero bHeroPl2;
         [SerializeField] private BattleSlotController bSlotControllerPl1;
-        [SerializeField] private BattleHero bHeroPl1;
 
         private LocalDB _cardSoDB;
         private LocalDB _spellSoDB;
@@ -33,11 +31,8 @@ namespace IjaOrisha
             _bSimPl1 = GetBattleData(BattlePlayer.PlayerOneBd);
             _bSimPl2 = GetBattleData(BattlePlayer.PlayerTwoBd);
 
-            bSlotControllerPl1.LoadSlot(_bSimPl1);
-            bSlotControllerPl2.LoadSlot(_bSimPl2);
-
-            bHeroPl1.Load(_bSimPl1, bHeroPl2);
-            bHeroPl2.Load(_bSimPl2, bHeroPl1);
+            bSlotControllerPl1.LoadSlot(_bSimPl1, bSlotControllerPl2);
+            bSlotControllerPl2.LoadSlot(_bSimPl2, bSlotControllerPl1);
 
             EventPub.Emit(PlayEvent.OnSimulationStart);
         }
@@ -45,18 +40,15 @@ namespace IjaOrisha
         public void SimulationStart()
         {
             var seq = Simulate(
-                PlayerID.Player1,
-                bSlotControllerPl1,
-                bSlotControllerPl2,
-                bHeroPl1,
-                bHeroPl2
-            ).Append(Simulate(
-                PlayerID.Player2,
-                bSlotControllerPl2,
-                bSlotControllerPl1,
-                bHeroPl2,
-                bHeroPl1
-            ));
+                    PlayerID.Player1,
+                    bSlotControllerPl1,
+                    bSlotControllerPl2
+                )
+                .Append(Simulate(
+                    PlayerID.Player2,
+                    bSlotControllerPl2,
+                    bSlotControllerPl1
+                ));
 
             // Get the total duration
             // float totalDuration = seq.Duration();
@@ -66,29 +58,42 @@ namespace IjaOrisha
         private Sequence Simulate(
             PlayerID playerID,
             BattleSlotController bSlotPl1,
-            BattleSlotController bSlotPl2,
-            BattleHero locBHeroPl1,
-            BattleHero locBHeroPl2)
+            BattleSlotController bSlotPl2)
         {
             Sequence seq = DOTween.Sequence();
             seq
-                // display left card
+                // reveal defence
                 .Append(bSlotPl2.ShowSlot(SlotID.DefenseCard))
-                .Append(bSlotPl1.ShowSlot(SlotID.AttackCard))
-
-                // display player attack point
-                .Append(locBHeroPl1.Attack())
-                .AppendInterval(2)
-
-                // display left spell
                 .Append(bSlotPl2.ShowSlot(SlotID.DefenseSpell))
-                .Append(locBHeroPl2.ApplyDefenceSpell())
+                .Append(bSlotPl2.ShowPoint(SlotID.DefenseCard))
+
+                // rest
+                .AppendInterval(.5f)
+
+                // reveal attack
+                .Append(bSlotPl1.ShowSlot(SlotID.AttackCard))
+                .Append(bSlotPl1.ShowPoint(SlotID.AttackCard))
                 .Append(bSlotPl1.ShowSlot(SlotID.AttackSpell))
-                .Append(locBHeroPl1.ApplyAttackSpell())
+
+                // rest
+                .AppendInterval(1)
+
+                // apply spell
+                .Append(bSlotPl2.MergeSpell(SlotID.DefenseCard))
+                .Append(bSlotPl2.ApplySpellPoint(SlotID.DefenseSpell))
+
+                // rest
+                .AppendInterval(1)
+
+                // apply spell
+                .Append(bSlotPl1.MergeSpell(SlotID.AttackCard))
+                .Append(bSlotPl1.ApplySpellPoint(SlotID.AttackSpell))
+                .AppendInterval(2)
 
                 // hide looser
                 .Append(HideLooser(playerID))
-                .Append(healthHud.UpdateHealth(playerID));
+                .Append(healthHud.UpdateHealth(playerID))
+                .Append(bSlotPl1.HidePoint());
             return seq;
         }
 
@@ -106,8 +111,6 @@ namespace IjaOrisha
             int defensePoint = 0;
             BattleSlotController bSlotDefence;
             BattleSlotController bSlotAttack;
-            BattleHero offenceHero;
-            BattleHero defenceHero;
 
             if (playerID == PlayerID.Player1)
             {
@@ -115,8 +118,6 @@ namespace IjaOrisha
                 defensePoint = _bSimPl2.BattleData.DefensePoint;
                 bSlotAttack = bSlotControllerPl1;
                 bSlotDefence = bSlotControllerPl2;
-                offenceHero = bHeroPl1;
-                defenceHero = bHeroPl2;
             }
             else
             {
@@ -124,26 +125,20 @@ namespace IjaOrisha
                 defensePoint = _bSimPl1.BattleData.DefensePoint;
                 bSlotAttack = bSlotControllerPl2;
                 bSlotDefence = bSlotControllerPl1;
-                offenceHero = bHeroPl2;
-                defenceHero = bHeroPl1;
             }
 
             if (attackPoint > defensePoint)
             {
-                seq.Append(bSlotDefence.HideSlot(SlotID.DefenseCard))
-                    .Append(defenceHero.Failed());
+                seq.Append(bSlotDefence.HideSlot(SlotID.DefenseCard));
             }
             else if (attackPoint < defensePoint)
             {
-                seq.Append(bSlotAttack.HideSlot(SlotID.AttackCard))
-                    .Append(offenceHero.Failed());
+                seq.Append(bSlotAttack.HideSlot(SlotID.AttackCard));
             }
             else
             {
                 seq.Append(bSlotAttack.HideSlot(SlotID.AttackCard))
-                    .Append(bSlotDefence.HideSlot(SlotID.DefenseCard))
-                    .Append(offenceHero.Failed())
-                    .Append(defenceHero.Failed());
+                    .Append(bSlotDefence.HideSlot(SlotID.DefenseCard));
             }
 
             return seq;

@@ -5,14 +5,16 @@ namespace IjaOrisha
 {
     public class BattleSlot : MonoBehaviour
     {
-        [SerializeField] private CardLoader cardLoader;
-        [SerializeField] private CardFlip flip;
+        public CardFlip flip;
+        public CardLoader cardLoader;
         [SerializeField] private bool isCardSo;
 
         public void LoadCard(CardSO cardSo, bool hideDefence)
         {
             flip.ResetPose();
             transform.localScale = Vector3.one * .8f;
+            cardLoader.transform.localScale = Vector3.one * 1.5f;
+            cardLoader.transform.localPosition = Vector3.zero;
 
             if (!cardSo)
             {
