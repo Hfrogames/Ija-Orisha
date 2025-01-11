@@ -39,62 +39,50 @@ namespace IjaOrisha
 
         public void SimulationStart()
         {
-            var seq = Simulate(
-                    PlayerID.Player1,
-                    bSlotControllerPl1,
-                    bSlotControllerPl2
-                )
-                .Append(Simulate(
-                    PlayerID.Player2,
-                    bSlotControllerPl2,
-                    bSlotControllerPl1
-                ));
+            Simulate(PlayerID.Player1, bSlotControllerPl1, bSlotControllerPl2)
+                .Append(Simulate(PlayerID.Player2, bSlotControllerPl2, bSlotControllerPl1))
+                .OnComplete(() => { EventPub.Emit(PlayEvent.OnSimulationEnd); });
 
             // Get the total duration
             // float totalDuration = seq.Duration();
             // Debug.Log("Total Sequence Duration: " + totalDuration + " seconds");
         }
 
-        private Sequence Simulate(
-            PlayerID playerID,
-            BattleSlotController bSlotPl1,
-            BattleSlotController bSlotPl2)
+        private Sequence Simulate(PlayerID playerID, BattleSlotController bSlotPl1, BattleSlotController bSlotPl2)
         {
-            Sequence seq = DOTween.Sequence();
-            seq
-                // reveal defence
-                .Append(bSlotPl2.ShowSlot(SlotID.DefenseCard))
-                .Append(bSlotPl2.ShowSlot(SlotID.DefenseSpell))
-                .Append(bSlotPl2.ShowPoint(SlotID.DefenseCard))
+            return DOTween.Sequence()
+                    // reveal defence
+                    .Append(bSlotPl2.ShowSlot(SlotID.DefenseCard))
+                    .Append(bSlotPl2.ShowSlot(SlotID.DefenseSpell))
+                    .Append(bSlotPl2.ShowPoint(SlotID.DefenseCard))
+                    // rest
+                    .AppendInterval(.5f)
 
-                // rest
-                .AppendInterval(.5f)
+                    // reveal attack
+                    .Append(bSlotPl1.ShowSlot(SlotID.AttackCard))
+                    .Append(bSlotPl1.ShowPoint(SlotID.AttackCard))
+                    .Append(bSlotPl1.ShowSlot(SlotID.AttackSpell))
 
-                // reveal attack
-                .Append(bSlotPl1.ShowSlot(SlotID.AttackCard))
-                .Append(bSlotPl1.ShowPoint(SlotID.AttackCard))
-                .Append(bSlotPl1.ShowSlot(SlotID.AttackSpell))
+                    // rest
+                    .AppendInterval(1)
 
-                // rest
-                .AppendInterval(1)
+                    // apply spell
+                    .Append(bSlotPl2.MergeSpell(SlotID.DefenseCard))
+                    .Append(bSlotPl2.ApplySpellPoint(SlotID.DefenseSpell))
 
-                // apply spell
-                .Append(bSlotPl2.MergeSpell(SlotID.DefenseCard))
-                .Append(bSlotPl2.ApplySpellPoint(SlotID.DefenseSpell))
+                    // rest
+                    .AppendInterval(1)
 
-                // rest
-                .AppendInterval(1)
+                    // apply spell
+                    .Append(bSlotPl1.MergeSpell(SlotID.AttackCard))
+                    .Append(bSlotPl1.ApplySpellPoint(SlotID.AttackSpell))
+                    .AppendInterval(2)
 
-                // apply spell
-                .Append(bSlotPl1.MergeSpell(SlotID.AttackCard))
-                .Append(bSlotPl1.ApplySpellPoint(SlotID.AttackSpell))
-                .AppendInterval(2)
-
-                // hide looser
-                .Append(HideLooser(playerID))
-                .Append(healthHud.UpdateHealth(playerID))
-                .Append(bSlotPl1.HidePoint());
-            return seq;
+                    // hide looser
+                    .Append(HideLooser(playerID))
+                    .Append(healthHud.UpdateHealth(playerID))
+                    .Append(bSlotPl1.HidePoint())
+                ;
         }
 
         public void SimulationEnd()

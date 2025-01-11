@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: ogun
   m_EditorClassIdentifier: 
   <CardID>k__BackingField: 0
+  <CardSprite>k__BackingField: {fileID: 1822302988, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
   <Orisha>k__BackingField: 1
   <AttackValue>k__BackingField: 8
   <DefenceValue>k__BackingField: 6
-  <CardSprite>k__BackingField: {fileID: 1822302988, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
+  <AttackSFX>k__BackingField: 5
+  <DefenceSFX>k__BackingField: 6
+  <spell>k__BackingField: 0
+  <spellValue>k__BackingField: 0
+  <SpellSFX>k__BackingField: 0

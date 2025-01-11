@@ -41,6 +41,7 @@ namespace IjaOrisha
 
         public static void FindWinner()
         {
+            if (!EventSub.IsSessionEnd) return;
             if (PlayerOneBd.PlayerHealth > PlayerTwoBd.PlayerHealth)
             {
                 EventPub.Emit(PlayEvent.OnSessionWin);

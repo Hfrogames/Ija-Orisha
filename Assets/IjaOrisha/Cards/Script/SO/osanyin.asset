@@ -17,5 +17,8 @@ MonoBehaviour:
   <Orisha>k__BackingField: 7
   <AttackValue>k__BackingField: 8
   <DefenceValue>k__BackingField: 6
+  <AttackSFX>k__BackingField: 19
+  <DefenceSFX>k__BackingField: 20
   <spell>k__BackingField: 0
   <spellValue>k__BackingField: 0
+  <SpellSFX>k__BackingField: 0

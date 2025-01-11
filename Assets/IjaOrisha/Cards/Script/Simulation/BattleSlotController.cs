@@ -34,7 +34,7 @@ namespace IjaOrisha
             attackSpell.LoadCard(bSim.AttackSpellSo, true);
             defenseCard.LoadCard(bSim.DefenseCardSo, false);
             defenseSpell.LoadCard(bSim.DefenseSpellSo, true);
-            
+
             gameObject.SetActive(true);
         }
 
@@ -123,8 +123,13 @@ namespace IjaOrisha
                             .Join(attackSpell.cardLoader.transform.DOScale(1.2f, 0.1f))
                             .Join(attackSpell.cardLoader.transform.DOLocalMoveX(-moveAmount, .2f)
                                 .SetEase(Ease.OutBack));
+
+                    _displaySq
+                        .AppendInterval(0.5f)
+                        .AppendCallback(attackCard.SoundFX);
                     break;
             }
+
 
             return _displaySq;
         }
@@ -134,6 +139,7 @@ namespace IjaOrisha
             int currentPointPl1 = battlePoint.currentPoint;
             int currentPointPl2 = _battleSlotPl2.battlePoint.currentPoint;
             CardSO spellSo = null;
+            _displaySq = DOTween.Sequence();
 
             if (slotID == SlotID.AttackSpell && _bSim.AttackSpellSo)
             {
@@ -146,24 +152,27 @@ namespace IjaOrisha
 
             if (!spellSo) return null;
 
-            _displaySq = DOTween.Sequence()
-                .Append(ApplyDoubleByTwo(spellSo, currentPointPl1))
-                .Append(ApplyDivideByTwo(spellSo, currentPointPl2));
+            switch (spellSo.spell)
+            {
+                case Spells.doubleByTwo:
+                    _displaySq.Append(ApplyDoubleByTwo(spellSo, currentPointPl1));
+                    break;
+                case Spells.divideByTwo:
+                    _displaySq.Append(ApplyDivideByTwo(spellSo, currentPointPl2));
+                    break;
+            }
+
             return _displaySq;
         }
 
         private Sequence ApplyDoubleByTwo(CardSO spellSo, int value)
         {
-            if (spellSo.spell != Spells.doubleByTwo) return null;
-
             value *= 2;
             return battlePoint.UpdatePoint(value);
         }
 
         private Sequence ApplyDivideByTwo(CardSO spellSo, int value)
         {
-            if (spellSo.spell != Spells.divideByTwo) return null;
-
             value /= 2;
             return _battleSlotPl2.battlePoint.UpdatePoint(value);
         }

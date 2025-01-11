@@ -7,7 +7,10 @@ namespace IjaOrisha
     {
         public CardFlip flip;
         public CardLoader cardLoader;
-        [SerializeField] private bool isCardSo;
+
+        private AudioManager _audioManager;
+
+        private CardSO _cardSo;
 
         public void LoadCard(CardSO cardSo, bool hideDefence)
         {
@@ -16,20 +19,16 @@ namespace IjaOrisha
             cardLoader.transform.localScale = Vector3.one * 1.5f;
             cardLoader.transform.localPosition = Vector3.zero;
 
-            if (!cardSo)
-            {
-                isCardSo = false;
-                return;
-            }
+            if (!cardSo) return;
 
             cardLoader.SetCardSo(cardSo);
             cardLoader.HidePoint(hideDefence);
-            isCardSo = true;
+            _cardSo = cardSo;
         }
 
         public Sequence ShowCard()
         {
-            return isCardSo ? flip.Flip(.1f) : flip.Flip(.1f, true);
+            return _cardSo ? flip.Flip(.1f) : flip.Flip(.1f, true);
         }
 
         public Sequence HideCard()
@@ -38,6 +37,14 @@ namespace IjaOrisha
             hideSq.Append(transform.DOScale(Vector3.zero, .1f));
 
             return hideSq;
+        }
+
+        public void SoundFX()
+        {
+            if (!_cardSo || _cardSo.CardID == CardType.Spell) return;
+
+            if (!_audioManager) _audioManager = AudioManager.Instance;
+            _audioManager.PlaySound(_cardSo.AttackSFX);
         }
     }
 }

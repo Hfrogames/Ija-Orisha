@@ -27,7 +27,6 @@ namespace IjaOrisha
                     break;
                 case "sessionEnd":
                     BattlePlayer.SetBattleData(message);
-                    BattlePlayer.FindWinner();
                     EventPub.Emit(PlayEvent.OnSessionEnd);
                     break;
             }

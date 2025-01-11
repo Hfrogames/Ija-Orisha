@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842f61dae8974ed0b3d00df30b9e17e3, type: 3}
-  m_Name: esuodara
+  m_Name: esu
   m_EditorClassIdentifier: 
   <CardID>k__BackingField: 0
   <CardSprite>k__BackingField: {fileID: 1484802240, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
-  <Orisha>k__BackingField: 4
+  <Orisha>k__BackingField: 5
   <AttackValue>k__BackingField: 10
   <DefenceValue>k__BackingField: 4
+  <AttackSFX>k__BackingField: 9
+  <DefenceSFX>k__BackingField: 10
   <spell>k__BackingField: 0
   <spellValue>k__BackingField: 0
+  <SpellSFX>k__BackingField: 0

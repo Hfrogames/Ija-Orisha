@@ -21,18 +21,19 @@ public class EventSub
             case PlayEvent.OnSimulationEnd:
                 InBattle = false;
                 break;
-            case PlayEvent.OnLobbyConnected:
-                IsLobbyConnected = true;
+            case PlayEvent.OnSessionEnd:
+                IsSessionEnd = true;
                 break;
         }
     }
 
     public static bool InFormation;
+    public static bool IsSessionEnd;
     public static bool InBattle;
-    public static bool IsLobbyConnected;
 
     public static void Initialize()
     {
         // this should init general eventsub
+        InFormation = IsSessionEnd = InBattle = false;
     }
 }

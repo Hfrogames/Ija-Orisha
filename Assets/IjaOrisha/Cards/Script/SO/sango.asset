@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: sango
   m_EditorClassIdentifier: 
   <CardID>k__BackingField: 0
+  <CardSprite>k__BackingField: {fileID: 1484802240, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
   <Orisha>k__BackingField: 0
   <AttackValue>k__BackingField: 10
   <DefenceValue>k__BackingField: 4
-  <CardSprite>k__BackingField: {fileID: 1484802240, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
+  <AttackSFX>k__BackingField: 3
+  <DefenceSFX>k__BackingField: 4
+  <spell>k__BackingField: 0
+  <spellValue>k__BackingField: 0
+  <SpellSFX>k__BackingField: 0

@@ -56,6 +56,10 @@ namespace IjaOrisha
                     simulationManager
                         .SimulationStart();
                     break;
+                case PlayEvent.OnSessionEnd:
+                case PlayEvent.OnSimulationEnd:
+                    BattlePlayer.FindWinner();
+                    break;
             }
         }
     }
