@@ -11,8 +11,8 @@ namespace IjaOrisha
         public static void LoadDummy() //TODO: Demo only
         {
             // TODO: demo only
-            PlayerOneID = "vwZEue";
-            SetBattleData(_demoMes);
+            // PlayerOneID = "vwZEue";
+            // SetBattleData(_demoMes);
         }
 
         public static void SetPlayer(SocMessage messsage)

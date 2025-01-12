@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: oba
   m_EditorClassIdentifier: 
   <CardID>k__BackingField: 0
-  <CardSprite>k__BackingField: {fileID: -637722443, guid: 611dcfe0dfbac1d959ff02573986b6e4, type: 3}
+  <CardSprite>k__BackingField: {fileID: -485243931, guid: 8c3297022c6eb07499ebcafea312ad91, type: 3}
   <Orisha>k__BackingField: 8
   <AttackValue>k__BackingField: 4
   <DefenceValue>k__BackingField: 8

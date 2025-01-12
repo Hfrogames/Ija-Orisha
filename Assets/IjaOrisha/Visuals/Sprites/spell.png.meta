@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 22f57ecebe8ba274298b915e8ac4b8eb
+guid: 8b301388c1531a2489401a51bac7b835
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_0
+      name: spell_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
-        width: 72
-        height: 66
+        y: 1646
+        width: 284
+        height: 402
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a88c39332c513f618b61cdb72faf7cc3
-      internalID: -801633558
+      spriteID: 82aed561a4022b44b90a14ac8e60d1fe
+      internalID: 1553612709
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_1
+      name: spell_1
       rect:
         serializedVersion: 2
-        x: 84
-        y: 12
-        width: 40
-        height: 42
+        x: 294
+        y: 1646
+        width: 284
+        height: 402
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 872bdb19888fe6f1b804894808a2b878
-      internalID: -507664353
+      spriteID: b7cd7acf453cadc4e8c57d177bacc4f8
+      internalID: -229023910
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_2
+      name: spell_2
       rect:
         serializedVersion: 2
-        x: 138
-        y: 0
-        width: 64
-        height: 67
+        x: 588
+        y: 1646
+        width: 284
+        height: 402
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,8 +182,140 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7669dbf03b6b13908df1c5d2d210cb0
-      internalID: 1575025205
+      spriteID: 9e2f0743e1632e4439ba9bd9c6fdf51b
+      internalID: -1357183936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_3
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 1646
+        width: 284
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83ec2845c6a2092498e3f55f0cd150db
+      internalID: -1895672183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_4
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 1646
+        width: 284
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8e075a13481e1e4b883a4e971f3ebf6
+      internalID: 350758168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_5
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 1646
+        width: 284
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b9724eedeac21e4e8527e0fb6c95633
+      internalID: -1155250805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_6
+      rect:
+        serializedVersion: 2
+        x: 1764
+        y: 1646
+        width: 284
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e85711936a059048a03bbde0aadd37e
+      internalID: 2096828519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1234
+        width: 284
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87f783144b4ed5a45b41e016ba47c0fd
+      internalID: -717043618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spell_8
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 1234
+        width: 284
+        height: 402
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35ca30cd84cff6e4fb84b9af447350a9
+      internalID: 788386840
       vertices: []
       indices: 
       edges: []
@@ -192,7 +324,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7943d7e8cf43e4f3ba6ae13f06ad9a98
+    spriteID: fc3dfbf7b1e8ecb43b4bcd07eac8fbcb
     internalID: 0
     vertices: []
     indices: 
@@ -202,11 +334,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_0: -801633558
-      player_1: -507664353
-      player_2: 1575025205
-      player_3: 1615165976
-      player_4: 1590630018
+      spell_0: 1553612709
+      spell_1: -229023910
+      spell_2: -1357183936
+      spell_3: -1895672183
+      spell_4: 350758168
+      spell_5: -1155250805
+      spell_6: 2096828519
+      spell_7: -717043618
+      spell_8: 788386840
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

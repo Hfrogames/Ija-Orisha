@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: divideByTwo
   m_EditorClassIdentifier: 
   <CardID>k__BackingField: 1
-  <CardSprite>k__BackingField: {fileID: -1483576382, guid: 017db1a0f66e98747ae218a7e3f8589c, type: 3}
+  <CardSprite>k__BackingField: {fileID: -1357183936, guid: 8b301388c1531a2489401a51bac7b835, type: 3}
   <Orisha>k__BackingField: 3
   <AttackValue>k__BackingField: 4
   <DefenceValue>k__BackingField: 10
