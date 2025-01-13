@@ -14,6 +14,7 @@ namespace IjaOrisha
 
         public void LoadCard(CardSO cardSo, bool hideDefence)
         {
+            _cardSo = null;
             flip.ResetPose();
             transform.localScale = Vector3.one * .8f;
             cardLoader.transform.localScale = Vector3.one * 1.5f;
@@ -21,9 +22,9 @@ namespace IjaOrisha
 
             if (!cardSo) return;
 
-            cardLoader.SetCardSo(cardSo);
-            cardLoader.HidePoint(hideDefence);
             _cardSo = cardSo;
+            cardLoader.SetCardSo(_cardSo);
+            cardLoader.HidePoint(hideDefence);
         }
 
         public Sequence ShowCard()
@@ -31,20 +32,37 @@ namespace IjaOrisha
             return _cardSo ? flip.Flip(.1f) : flip.Flip(.1f, true);
         }
 
-        public Sequence HideCard()
+        public Tween HideCard()
         {
-            Sequence hideSq = DOTween.Sequence();
-            hideSq.Append(transform.DOScale(Vector3.zero, .1f));
-
-            return hideSq;
+            return transform.DOScale(Vector3.zero, .1f)
+                .OnComplete(() => { _cardSo = null; });
         }
 
-        public void SoundFX()
+        public void PlaySoundFX(SoundFX effect)
         {
             if (!_cardSo || _cardSo.CardID == CardType.Spell) return;
 
             if (!_audioManager) _audioManager = AudioManager.Instance;
-            _audioManager.PlaySound(_cardSo.AttackSFX);
+
+            switch (effect)
+            {
+                case SoundFX.Attack:
+                    _audioManager.PlaySound(_cardSo.AttackSFX);
+                    break;
+                case SoundFX.Defence:
+                    _audioManager.PlaySound(_cardSo.DefenceSFX);
+                    break;
+                case SoundFX.Spell:
+                    _audioManager.PlaySound(_cardSo.SpellSFX);
+                    break;
+            }
         }
+    }
+
+    public enum SoundFX
+    {
+        Attack,
+        Defence,
+        Spell
     }
 }

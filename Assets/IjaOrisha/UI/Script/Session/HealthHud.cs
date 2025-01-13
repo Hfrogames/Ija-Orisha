@@ -1,37 +1,28 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IjaOrisha
 {
     public class HealthHud : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI healthPl1;
-        [SerializeField] private TextMeshProUGUI healthPl2;
+        [SerializeField] private TextMeshProUGUI healthPoint;
 
-        public Sequence UpdateHealth(PlayerID playerID)
+        private int? _health;
+
+        public void LoadHealth(int health)
         {
-            Sequence healthSq = DOTween.Sequence();
-            TextMeshProUGUI textToEdit;
-            int health = 0;
+            _health = health;
+        }
 
-
-            if (playerID == PlayerID.Player1)
-            {
-                textToEdit = healthPl1;
-                health = BattlePlayer.PlayerOneBd.PlayerHealth;
-            }
-            else
-            {
-                textToEdit = healthPl2;
-                health = BattlePlayer.PlayerTwoBd.PlayerHealth;
-            }
-
-            healthSq
-                .Append(textToEdit.transform.DOScale(0, 0.05f))
-                .AppendCallback(() => { textToEdit.text = health.ToString(); })
-                .Append(textToEdit.transform.DOScale(1, 0.2f));
-            return healthSq;
+        public Sequence UpdateHealth()
+        {
+            if (!_health.HasValue) return null;
+            return DOTween.Sequence()
+                .Append(healthPoint.transform.DOScale(0, 0.05f))
+                .AppendCallback(() => { healthPoint.text = _health.ToString(); })
+                .Append(healthPoint.transform.DOScale(1, 0.2f));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace IjaOrisha
                 int neededCard = _maxOrishaCard - _orishaCardCount;
                 int neededSpell = _maxSpellCard - _spellCardCount;
 
-                Debug.Log(neededCard + " " + neededSpell);
+                // Debug.Log(neededCard + " " + neededSpell);
 
                 SpawnCard(CardType.Card, neededCard);
                 SpawnCard(CardType.Spell, neededSpell);

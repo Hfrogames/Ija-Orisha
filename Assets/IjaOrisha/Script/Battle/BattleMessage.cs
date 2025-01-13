@@ -15,6 +15,7 @@ namespace IjaOrisha
                     EventPub.Emit(PlayEvent.OnSessionStart);
                     break;
                 case "formationStart":
+                    BattlePlayer.UpdateBattleInfo(message);
                     EventPub.Emit(PlayEvent.OnFormationStart);
                     break;
                 case "formationEnd":

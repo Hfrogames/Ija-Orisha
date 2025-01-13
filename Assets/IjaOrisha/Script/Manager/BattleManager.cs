@@ -1,9 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace IjaOrisha
 {
     public class BattleManager : MonoBehaviour
     {
+        [SerializeField] private BattleInfo battleInfo;
         [SerializeField] private SessionSocket sessionSocket;
         [SerializeField] private FormationManager formationManager;
         [SerializeField] private SimulationManager simulationManager;
@@ -33,6 +35,9 @@ namespace IjaOrisha
                     string joinDataString = SaveData.GetItemString("sessionToken");
                     _battleData = JsonUtility.FromJson<SocMessage>(joinDataString);
                     break;
+                case PlayEvent.OnSessionJoined:
+                    battleInfo.Round().OnComplete(formationManager.LoadDeck);
+                    break;
                 case PlayEvent.OnFormationStart:
                     formationManager.FormationStart();
                     simulationManager.SimulationEnd();
@@ -55,10 +60,6 @@ namespace IjaOrisha
                 case PlayEvent.OnSimulationStart:
                     simulationManager
                         .SimulationStart();
-                    break;
-                case PlayEvent.OnSessionEnd:
-                case PlayEvent.OnSimulationEnd:
-                    BattlePlayer.FindWinner();
                     break;
             }
         }

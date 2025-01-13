@@ -12,9 +12,10 @@ namespace IjaOrisha
 
         public int currentPoint { get; private set; }
 
-        public Sequence SetPoint(int pointValue)
+        public Sequence SetPoint(int? pointValue)
         {
-            currentPoint = pointValue;
+            int valueToUse = pointValue ?? 0;
+            currentPoint = valueToUse;
             return DOTween.Sequence()
                 .JoinCallback(() =>
                 {
@@ -26,9 +27,10 @@ namespace IjaOrisha
                 .Append(pointText.transform.DOScale(Vector3.one, 0.2f).From(Vector3.zero).SetEase(Ease.OutBack));
         }
 
-        public Sequence UpdatePoint(int pointValue)
+        public Sequence UpdatePoint(int? pointValue)
         {
-            currentPoint = pointValue;
+            int valueToUse = pointValue ?? 0;
+            currentPoint = valueToUse;
             return DOTween.Sequence()
                 .Append(pointText.transform.DOScale(Vector3.one, 0.2f).From(Vector3.zero).SetEase(Ease.OutBack))
                 .JoinCallback(() => { pointText.text = pointValue.ToString(); });

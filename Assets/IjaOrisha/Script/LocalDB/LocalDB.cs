@@ -16,14 +16,14 @@ namespace IjaOrisha
 
         public CardSO GetCard(string cardName)
         {
-            if (!IsCardSo || cardSo == null || string.IsNullOrEmpty(cardName))
+            if (!IsCardSo || cardSo.Count == 0 || string.IsNullOrEmpty(cardName))
             {
                 return null;
             }
 
             foreach (var card in cardSo)
             {
-                if (card != null && card.name.Equals(cardName, StringComparison.OrdinalIgnoreCase))
+                if (card && card.name.Equals(cardName, StringComparison.OrdinalIgnoreCase))
                 {
                     return card;
                 }

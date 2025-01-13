@@ -8,11 +8,24 @@ namespace IjaOrisha
         public static BattleData PlayerOneBd { get; private set; }
         public static BattleData PlayerTwoBd { get; private set; }
 
+        private static bool roundComplete;
+
+        public static int CurrentRound { get; private set; }
+        public static int MaxRound { get; private set; }
+
         public static void LoadDummy() //TODO: Demo only
         {
             // TODO: demo only
-            // PlayerOneID = "vwZEue";
-            // SetBattleData(_demoMes);
+            PlayerOneID = "vwZEue";
+            CurrentRound = 1;
+            MaxRound = 3;
+            SetBattleData(_demoMes);
+        }
+
+        public static void UpdateBattleInfo(SocMessage messsage)
+        {
+            CurrentRound = messsage.currentRound;
+            MaxRound = messsage.totalRounds;
         }
 
         public static void SetPlayer(SocMessage messsage)
@@ -37,11 +50,13 @@ namespace IjaOrisha
                 PlayerOneBd = messsage.playerTwoBD;
                 PlayerTwoBd = messsage.playerOneBD;
             }
+
+            roundComplete = messsage.currentRound == messsage.totalRounds ? true : false;
         }
 
         public static void FindWinner()
         {
-            if (!EventSub.IsSessionEnd) return;
+            if (EventSub.InSimulation || !EventSub.IsSessionEnd || !roundComplete) return;
             if (PlayerOneBd.PlayerHealth > PlayerTwoBd.PlayerHealth)
             {
                 EventPub.Emit(PlayEvent.OnSessionWin);
@@ -63,24 +78,24 @@ namespace IjaOrisha
             playerOne = "vwZEue",
             playerOneBD = new BattleData()
             {
-                AttackCard = "sango",
+                AttackCard = "oba",
                 DefenseCard = "osun",
                 AttackSpell = "divideByTwo",
                 DefenseSpell = "None",
-                AttackPoint = 20,
+                AttackPoint = 4,
                 DefensePoint = 4,
-                PlayerHealth = 10,
+                PlayerHealth = 20,
             },
             playerTwo = "RnYL7w",
             playerTwoBD = new BattleData()
             {
-                AttackCard = "ogun",
+                AttackCard = "olokun",
                 DefenseCard = "yemoja",
                 AttackSpell = "divideByTwo",
-                DefenseSpell = "doubleByTwo",
-                AttackPoint = 8,
-                DefensePoint = 20,
-                PlayerHealth = 15,
+                DefenseSpell = "None",
+                AttackPoint = 4,
+                DefensePoint = 5,
+                PlayerHealth = 20,
             },
             roundTimeout = 20,
             currentRound = 2,

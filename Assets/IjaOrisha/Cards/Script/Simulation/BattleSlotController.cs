@@ -40,20 +40,22 @@ namespace IjaOrisha
 
         public Sequence ShowPoint(SlotID slotID)
         {
-            _displaySq = DOTween.Sequence();
-            _displaySq.AppendInterval(0.5f);
+            int point = 0;
 
             switch (slotID)
             {
                 case SlotID.AttackCard:
-                    _displaySq.Append(battlePoint.SetPoint(_bSim.AttackCardSo.AttackValue));
+                    if (_bSim.AttackCardSo)
+                        point = _bSim.AttackCardSo.AttackValue;
                     break;
                 case SlotID.DefenseCard:
-                    _displaySq.Append(battlePoint.SetPoint(_bSim.DefenseCardSo.DefenceValue));
+                    if (_bSim.DefenseCardSo)
+                        point = _bSim.DefenseCardSo.DefenceValue;
                     break;
             }
 
-            return _displaySq;
+
+            return battlePoint.SetPoint(point);
         }
 
         public Sequence HidePoint()
@@ -72,7 +74,7 @@ namespace IjaOrisha
         public Sequence ShowSlot(SlotID slotID)
         {
             _displaySq = DOTween.Sequence();
-            _displaySq.AppendInterval(0.5f);
+            _displaySq.AppendInterval(1f);
 
             switch (slotID)
             {
@@ -83,7 +85,7 @@ namespace IjaOrisha
                     _displaySq.Join(attackSpell.ShowCard());
                     break;
                 case SlotID.DefenseCard:
-                    _displaySq.Join(defenseCard.ShowCard());
+                    _displaySq.Append(defenseCard.ShowCard());
                     break;
                 case SlotID.DefenseSpell:
                     _displaySq.Join(defenseSpell.ShowCard());
@@ -123,15 +125,33 @@ namespace IjaOrisha
                             .Join(attackSpell.cardLoader.transform.DOScale(1.2f, 0.1f))
                             .Join(attackSpell.cardLoader.transform.DOLocalMoveX(-moveAmount, .2f)
                                 .SetEase(Ease.OutBack));
-
-                    _displaySq
-                        .AppendInterval(0.5f)
-                        .AppendCallback(attackCard.SoundFX);
                     break;
             }
 
-
             return _displaySq;
+        }
+
+        public Sequence Attack()
+        {
+            // apply attack vfx
+            return DOTween.Sequence()
+                    .AppendInterval(0.5f)
+                    .AppendCallback(() => { attackCard.PlaySoundFX(SoundFX.Attack); })
+                ;
+        }
+
+        public Sequence Defend()
+        {
+            // apply defence vfx
+            return DOTween.Sequence()
+                    .AppendInterval(0.5f)
+                // .AppendCallback(() => { Debug.Log("I defend attack"); })
+                ;
+        }
+
+        public void DefendSound()
+        {
+            defenseCard.PlaySoundFX(SoundFX.Defence);
         }
 
         public Sequence ApplySpellPoint(SlotID slotID)

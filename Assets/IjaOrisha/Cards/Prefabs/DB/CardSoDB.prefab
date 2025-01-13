@@ -46,8 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locDB: 0
   cardSo:
+  - {fileID: 11400000, guid: 956585980b7579471af667a3ac96675f, type: 2}
+  - {fileID: 11400000, guid: 6ece591e24089e22eb24a233248f90be, type: 2}
+  - {fileID: 11400000, guid: 78f886d912cdb44dca7ae656ebbf6658, type: 2}
   - {fileID: 11400000, guid: d3e5cbe52339c7e4e90be23e511a8ac4, type: 2}
+  - {fileID: 11400000, guid: 76915dc1caab105549d6464ee13e6d57, type: 2}
+  - {fileID: 11400000, guid: cb340414de6575689ae390673f01d6aa, type: 2}
   - {fileID: 11400000, guid: f5c949534e22f104ebb574f3b30aa6cc, type: 2}
+  - {fileID: 11400000, guid: 2863abe15419fa15da5d3c48aed0acf5, type: 2}
   - {fileID: 11400000, guid: 0c588023d89ccf64e9374b331f0f0ea8, type: 2}
   - {fileID: 11400000, guid: ff3aeff1c4adbbe4d8d6ed81a159b665, type: 2}
   - {fileID: 11400000, guid: d2dcef07995744847a3a1a214dbc4fc1, type: 2}

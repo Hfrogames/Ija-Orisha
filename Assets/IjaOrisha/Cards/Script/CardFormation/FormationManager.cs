@@ -49,7 +49,7 @@ namespace IjaOrisha
         {
             playerOneFormation.SetActive(true);
             playerTwoFormation.SetActive(true);
-            deckLoader.Reveal();
+            
         }
 
         public void FormationEnd()
@@ -62,9 +62,9 @@ namespace IjaOrisha
             defenseZoneSpell.Clear();
         }
 
-        public void Display()
+        public void LoadDeck()
         {
-            Debug.Log(JsonUtility.ToJson(Pack()));
+            deckLoader.Reveal();
         }
     }
 }

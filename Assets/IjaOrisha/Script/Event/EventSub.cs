@@ -1,3 +1,5 @@
+using IjaOrisha;
+
 public class EventSub
 {
     static EventSub()
@@ -16,10 +18,11 @@ public class EventSub
                 InFormation = false;
                 break;
             case PlayEvent.OnSimulationStart:
-                InBattle = true;
+                InSimulation = true;
                 break;
             case PlayEvent.OnSimulationEnd:
-                InBattle = false;
+                InSimulation = false;
+                BattlePlayer.FindWinner();
                 break;
             case PlayEvent.OnSessionEnd:
                 IsSessionEnd = true;
@@ -29,11 +32,11 @@ public class EventSub
 
     public static bool InFormation;
     public static bool IsSessionEnd;
-    public static bool InBattle;
+    public static bool InSimulation;
 
     public static void Initialize()
     {
         // this should init general eventsub
-        InFormation = IsSessionEnd = InBattle = false;
+        InFormation = IsSessionEnd = InSimulation = false;
     }
 }
