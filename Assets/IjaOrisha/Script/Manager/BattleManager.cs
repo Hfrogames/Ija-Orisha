@@ -39,6 +39,7 @@ namespace IjaOrisha
                     battleInfo.Round().OnComplete(formationManager.LoadDeck);
                     break;
                 case PlayEvent.OnFormationStart:
+                    battleInfo.Round().OnComplete(formationManager.LoadDeck);
                     formationManager.FormationStart();
                     simulationManager.SimulationEnd();
                     break;

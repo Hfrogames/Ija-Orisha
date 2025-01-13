@@ -8,6 +8,8 @@ namespace IjaOrisha
         public static BattleData PlayerOneBd { get; private set; }
         public static BattleData PlayerTwoBd { get; private set; }
 
+        public static int RoundTimeout { get; private set; }
+
         private static bool roundComplete;
 
         public static int CurrentRound { get; private set; }
@@ -16,16 +18,18 @@ namespace IjaOrisha
         public static void LoadDummy() //TODO: Demo only
         {
             // TODO: demo only
-            PlayerOneID = "vwZEue";
-            CurrentRound = 1;
-            MaxRound = 3;
-            SetBattleData(_demoMes);
+            // PlayerOneID = "vwZEue";
+            // CurrentRound = 1;
+            // MaxRound = 3;
+            // SetBattleData(_demoMes);
         }
 
         public static void UpdateBattleInfo(SocMessage messsage)
         {
             CurrentRound = messsage.currentRound;
             MaxRound = messsage.totalRounds;
+            RoundTimeout = messsage.roundTimeout;
+            EventPub.Emit(PlayEvent.OnFormationStart);
         }
 
         public static void SetPlayer(SocMessage messsage)
@@ -36,6 +40,7 @@ namespace IjaOrisha
                 PlayerTwoID = messsage.playerTwo;
             else if (messsage.playerTwo == PlayerOneID)
                 PlayerTwoID = messsage.playerOne;
+            
         }
 
         public static void SetBattleData(SocMessage messsage)

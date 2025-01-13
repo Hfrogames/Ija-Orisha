@@ -16,10 +16,10 @@ public class CardSO : ScriptableObject
     [field: SerializeField, ShowIf(nameof(isCard))]
     public Orisha Orisha { get; private set; }
 
-    [field: SerializeField, Range(0, 10), ShowIf(nameof(isCard))]
+    [field: SerializeField, Range(0, 20), ShowIf(nameof(isCard))]
     public int AttackValue { get; private set; }
 
-    [field: SerializeField, Range(0, 10), ShowIf(nameof(isCard))]
+    [field: SerializeField, Range(0, 20), ShowIf(nameof(isCard))]
     public int DefenceValue { get; private set; }
 
     [field: SerializeField, ShowIf(nameof(isCard))]

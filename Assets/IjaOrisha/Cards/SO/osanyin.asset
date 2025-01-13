@@ -15,8 +15,8 @@ MonoBehaviour:
   <CardID>k__BackingField: 0
   <CardSprite>k__BackingField: {fileID: 1386450323, guid: 8c3297022c6eb07499ebcafea312ad91, type: 3}
   <Orisha>k__BackingField: 7
-  <AttackValue>k__BackingField: 8
-  <DefenceValue>k__BackingField: 6
+  <AttackValue>k__BackingField: 14
+  <DefenceValue>k__BackingField: 18
   <AttackSFX>k__BackingField: 19
   <DefenceSFX>k__BackingField: 20
   <spell>k__BackingField: 0

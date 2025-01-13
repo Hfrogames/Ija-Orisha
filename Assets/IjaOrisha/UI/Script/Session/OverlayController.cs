@@ -31,13 +31,13 @@ namespace IjaOrisha
             switch (playEvent)
             {
                 case PlayEvent.OnSessionConnected:
-                    Debug.Log("connected please wait");
+                    // Debug.Log("connected please wait");
                     break;
                 case PlayEvent.OnSessionJoined:
-                    Debug.Log("waiting for opponent...");
+                    // Debug.Log("waiting for opponent...");
                     break;
                 case PlayEvent.OnSessionStart:
-                    Debug.Log("Battle Ready...");
+                    // Debug.Log("Battle Ready...");
                     break;
                 case PlayEvent.OnSessionWin:
                     overlayImg.enabled = true;

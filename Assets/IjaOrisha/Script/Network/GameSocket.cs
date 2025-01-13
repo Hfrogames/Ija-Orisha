@@ -45,7 +45,7 @@ namespace IjaOrisha
         {
             var message = System.Text.Encoding.UTF8.GetString(bytes);
 
-            Debug.Log(message);
+            // Debug.Log(message);
 
             SocMessage socResponse = JsonUtility.FromJson<SocMessage>(message);
 

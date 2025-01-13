@@ -11,6 +11,8 @@ namespace IjaOrisha
         [SerializeField] private Image formationTimeout;
         [SerializeField] private TextMeshProUGUI battleInfo;
 
+        private Tween _formationFill;
+
         private void OnEnable()
         {
             EventPub.OnPlayEvent += OnPlayEvent;
@@ -22,6 +24,7 @@ namespace IjaOrisha
             EventPub.OnPlayEvent -= OnPlayEvent;
         }
 
+
         private void OnPlayEvent(PlayEvent playEvent)
         {
             switch (playEvent)
@@ -29,11 +32,12 @@ namespace IjaOrisha
                 case PlayEvent.OnFormationStart:
                     button.enabled = true;
                     battleInfo.text = "Submit";
-                    formationTimeout.DOFillAmount(1, 20)
+                    _formationFill = formationTimeout.DOFillAmount(1, BattlePlayer.RoundTimeout)
                         .From()
                         .OnComplete(EmitFormationEnd);
                     break;
                 case PlayEvent.OnFormationEnd:
+                    _formationFill.Complete();
                     formationTimeout.fillAmount = 0;
                     button.enabled = false;
                     battleInfo.text = "Processing";
@@ -50,17 +54,19 @@ namespace IjaOrisha
             }
         }
 
+        private void OnClick()
+        {
+            EmitFormationEnd();
+        }
+
         private void EmitFormationEnd()
         {
             if (EventSub.InFormation)
             {
                 EventPub.Emit(PlayEvent.OnFormationEnd);
+                EventPub.Emit(PlayEvent.OnFormationSubmit);
+                button.enabled = false;
             }
-        }
-
-        private void OnClick()
-        {
-            EmitFormationEnd();
         }
     }
 }
