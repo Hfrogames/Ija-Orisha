@@ -8720,6 +8720,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: battleInfo
       objectReference: {fileID: 0}
+    - target: {fileID: 4457404422381278756, guid: 4985edddc6776d575815bd9321d396ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5151053556712038575, guid: 4985edddc6776d575815bd9321d396ee, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -35,9 +35,6 @@ namespace IjaOrisha
                     string joinDataString = SaveData.GetItemString("sessionToken");
                     _battleData = JsonUtility.FromJson<SocMessage>(joinDataString);
                     break;
-                case PlayEvent.OnSessionJoined:
-                    battleInfo.Round().OnComplete(formationManager.LoadDeck);
-                    break;
                 case PlayEvent.OnFormationStart:
                     battleInfo.Round().OnComplete(formationManager.LoadDeck);
                     formationManager.FormationStart();
@@ -51,7 +48,7 @@ namespace IjaOrisha
                         roomID = _battleData.roomID,
                         playerOneBD = formationManager.Pack()
                     };
-
+                    Debug.Log("sending socket message");
                     sessionSocket.SendWebSocketMessage(battleData);
                     break;
                 case PlayEvent.OnBattleData:

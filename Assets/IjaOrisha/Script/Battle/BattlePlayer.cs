@@ -56,7 +56,7 @@ namespace IjaOrisha
                 PlayerTwoBd = messsage.playerOneBD;
             }
 
-            roundComplete = messsage.currentRound == messsage.totalRounds ? true : false;
+            roundComplete = (messsage.currentRound - 1) == messsage.totalRounds ? true : false;
         }
 
         public static void FindWinner()

@@ -33,8 +33,8 @@ namespace IjaOrisha
                     button.enabled = true;
                     battleInfo.text = "Submit";
                     _formationFill = formationTimeout.DOFillAmount(1, BattlePlayer.RoundTimeout)
-                        .From()
-                        .OnComplete(EmitFormationEnd);
+                        .From();
+                    DOVirtual.DelayedCall(BattlePlayer.RoundTimeout, EmitFormationEnd);
                     break;
                 case PlayEvent.OnFormationEnd:
                     _formationFill.Complete();
